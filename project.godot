@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 GameState="*res://autoload/GameState.gd"
 
+=======
+run/main_scene="res://scenes/main_menu_entry.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
+config/icon="res://icon.svg"
+
 [display]
 
 window/size/viewport_width=1080
@@ -30,3 +35,4 @@ window/handheld/orientation=1
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
