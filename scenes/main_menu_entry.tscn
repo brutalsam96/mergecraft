@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://tdiulhj6iugj"]
+
+[ext_resource type="Script" path="res://scripts/main_menu_entry.gd" id="1_kyodm"]
+[ext_resource type="Texture2D" uid="uid://do1neetfhmboi" path="res://assets/buttons/start_normal.png" id="1_rxujj"]
+[ext_resource type="Texture2D" uid="uid://cu7dn4y5rvd8u" path="res://assets/buttons/start_pressed.png" id="4_2gtuu"]
+[ext_resource type="Texture2D" uid="uid://j5r35sx7l3iu" path="res://assets/buttons/help_normal.png" id="5_lrv1t"]
+[ext_resource type="Texture2D" uid="uid://csf4gxlo5u48l" path="res://assets/buttons/help_pressed.png" id="6_faqun"]
+[ext_resource type="Texture2D" uid="uid://knt4d4t8axlp" path="res://assets/buttons/settings_normal.png" id="7_5knms"]
+[ext_resource type="Texture2D" uid="uid://blrpsewnmud08" path="res://assets/buttons/settings_pressed.png" id="8_70wcn"]
+[ext_resource type="Texture2D" uid="uid://c2em6pyulbnu3" path="res://assets/buttons/quit_normal.png" id="9_of6hx"]
+[ext_resource type="Texture2D" uid="uid://cnuidt7pxj0yg" path="res://assets/background.png" id="10_ed3ic"]
+[ext_resource type="Texture2D" uid="uid://buivbhdq4ry5n" path="res://assets/buttons/quit_pressed.png" id="10_v618c"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_kyodm")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_ed3ic")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -399.5
+offset_top = -531.0
+offset_right = 400.5
+offset_bottom = 537.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="StartButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("1_rxujj")
+texture_pressed = ExtResource("4_2gtuu")
+stretch_mode = 5
+
+[node name="LevelsButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("5_lrv1t")
+texture_pressed = ExtResource("6_faqun")
+stretch_mode = 5
+
+[node name="OptionsButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("7_5knms")
+texture_pressed = ExtResource("8_70wcn")
+stretch_mode = 5
+
+[node name="QuitButton" type="TextureButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("9_of6hx")
+texture_pressed = ExtResource("10_v618c")
+stretch_mode = 5
