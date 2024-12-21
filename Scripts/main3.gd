@@ -89,6 +89,8 @@ func generate_buttons() -> void:
         
         button_container.add_child(button)
 
+
+
 # Function to handle input events for drag selection
 func _input(event):
     if event is InputEventMouseButton:
@@ -102,16 +104,13 @@ func _input(event):
                 if selected_buttons.size() == 2:
                     check_result()
     elif event is InputEventMouseMotion and is_dragging:
-        var mouse_pos: Vector2 = to_local(event.position)
+        var mouse_pos: Vector2 = get_local_mouse_position()
         var control: Control = get_child_at_position(button_container, mouse_pos)
         if control and control is Button:
             var element: String = control.get_meta("element")
             if not dragged_elements.has(element):
                 dragged_elements[element] = true
                 selected_buttons.append(element)
-                # Provide visual feedback by changing text color to red
-                #control.add_color_override("font_color", Color(1, 0, 0))
-                # Check if two buttons are selected
                 if selected_buttons.size() == 2:
                     is_dragging = false
                     check_result()
@@ -158,10 +157,10 @@ func _on_button_pressed(button: Button) -> void:
     
     if selected_buttons.has(selected_element):
         selected_buttons.erase(selected_element)
-        button.add_color_override("font_color", Color(1, 1, 1))  # Reset color to white
+        #button.add_color_override("font_color", Color(1, 1, 1))  # Reset color to white
     else:
         selected_buttons.append(selected_element)
-        button.add_color_override("font_color", Color(1, 0, 0))  # Highlight selection in red
+        #button.add_color_override("font_color", Color(1, 0, 0))  # Highlight selection in red
     
     # Check if two buttons are selected
     if selected_buttons.size() == 2:

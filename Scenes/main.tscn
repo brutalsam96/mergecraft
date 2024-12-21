@@ -6,10 +6,10 @@
 script = ExtResource("1_y1hkl")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 81.0
-offset_top = 48.0
-offset_right = 298.0
-offset_bottom = 147.0
+offset_left = 74.0
+offset_top = 224.0
+offset_right = 291.0
+offset_bottom = 323.0
 
 [node name="Label2" type="Label" parent="."]
 offset_left = 492.0
@@ -30,7 +30,7 @@ offset_right = 264.0
 offset_bottom = 94.0
 
 [node name="ButtonCont" type="GridContainer" parent="."]
-offset_left = 27.0
-offset_top = 31.0
-offset_right = 471.0
-offset_bottom = 627.0
+offset_left = 16.0
+offset_top = 1118.0
+offset_right = 1040.0
+offset_bottom = 1706.0
