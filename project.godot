@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="mergecraft"
-run/main_scene="res://scenes/main_menu_entry.tscn"
+run/main_scene="res://scenes/main_menu_entry_simple.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameState="*res://autoload/GameState.gd"
 
 [display]
 
