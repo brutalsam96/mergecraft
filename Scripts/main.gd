@@ -5,9 +5,10 @@ var result_label: Label
 var category_label: Label
 var diff_label: Label
 var level_label: Label
-var combinations = []
-var filtered_combinations = []
+
+# Resettable game state
 var level = 1
+var filtered_combinations = []
 
 func _ready():
 	# Reference the nodes
@@ -17,40 +18,22 @@ func _ready():
 	level_label = $Label4
 
 	# Initialize the level counter
-	level_label.text = "Level: " + str(level)
-
-	# Load combinations from JSON file
-	var file_instance = FileAccess.open("res://elements.json", FileAccess.READ)
-	if file_instance:
-		var json_data = file_instance.get_as_text()
-		var json = JSON.new()
-		var parse_result = json.parse(json_data)
-		if parse_result == OK:
-			combinations = json.data["combinations"]
-			update_filtered_combinations()
-		else:
-			print("Failed to parse JSON")
-		file_instance.close()
-	else:
-		print("elements.json not found")
+	reset_game()
 
 	# Connect the Button signal to the randomize function
 	$Button.connect("pressed", Callable(self, "_on_button_pressed"))
 
-# Function to update the filtered combinations based on difficulty tiers
-func update_filtered_combinations():
-	if level <= 5:
-		filtered_combinations = combinations.filter(func(c):
-			return c["difficulty"] >= 1 and c["difficulty"] <= 3
-		)
-	elif level <= 11:
-		filtered_combinations = combinations.filter(func(c):
-			return c["difficulty"] >= 3 and c["difficulty"] <= 6
-		)
-	else:
-		filtered_combinations = combinations.filter(func(c):
-			return c["difficulty"] >= 6 and c["difficulty"] <= 10
-		)
+func reset_game():
+	# Reset game state
+	level = 1
+	level_label.text = "Level: " + str(level)
+
+	# Load combinations only once
+	if GameState.combinations.size() == 0:
+		GameState.load_combinations()
+
+	# Get filtered combinations for the starting level
+	filtered_combinations = GameState.get_filtered_combinations(level)
 
 # Function to pick a random combination and update the labels
 func _on_button_pressed():
@@ -68,7 +51,10 @@ func _on_button_pressed():
 		level_label.text = "Level: " + str(level)
 
 		# Update the filtered combinations for the new level
-		update_filtered_combinations()
+		filtered_combinations = GameState.get_filtered_combinations(level)
 	else:
 		result_label.text = "No combinations available"
 		category_label.text = ""
+
+func _on_restart_game_pressed():
+	reset_game()
