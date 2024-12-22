@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://62vcyoppjt27"]
+[gd_scene load_steps=13 format=3 uid="uid://62vcyoppjt27"]
 
 [ext_resource type="Script" path="res://Scripts/main4.gd" id="1_aeks7"]
 [ext_resource type="AudioStream" uid="uid://6235cdprl3aw" path="res://assets/game-music-loop-9-145494.mp3" id="2_7l8t5"]
@@ -12,6 +12,15 @@
 [sub_resource type="LabelSettings" id="LabelSettings_ij3gf"]
 font = SubResource("SystemFont_l2wjn")
 font_size = 81
+
+[sub_resource type="SystemFont" id="SystemFont_ykbcl"]
+font_names = PackedStringArray("Exo")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v7bb4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tn3q4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6lgqm"]
 
 [node name="Main" type="Node2D"]
 position = Vector2(565, 1920)
@@ -141,3 +150,30 @@ offset_top = -1749.0
 offset_right = 434.0
 offset_bottom = -1589.0
 metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -499.0
+offset_top = -1874.0
+offset_right = -384.0
+offset_bottom = -1736.0
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.906493, 0.906493, 0.906493, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.905882, 0.905882, 0.905882, 1)
+theme_override_colors/font_hover_color = Color(0.905882, 0.905882, 0.905882, 1)
+theme_override_colors/font_pressed_color = Color(0.905882, 0.905882, 0.905882, 1)
+theme_override_colors/font_focus_color = Color(0.905882, 0.905882, 0.905882, 1)
+theme_override_colors/font_color = Color(0.905882, 0.905882, 0.905882, 1)
+theme_override_colors/font_outline_color = Color(0.905882, 0.905882, 0.905882, 1)
+theme_override_fonts/font = SubResource("SystemFont_ykbcl")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxEmpty_v7bb4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_tn3q4")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6lgqm")
+text = "BACK"
+alignment = 0
+vertical_icon_alignment = 0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -59,11 +59,11 @@ func initialize_score_attempts() -> void:
 
 func update_score_label() -> void:
     if score_label:
-        score_label.text = "Score: %d" % score
+        score_label.text = "SCORE: %d" % score
 
 func update_attempts_label() -> void:
     if attempts_label:
-        attempts_label.text = "Attempts: %d" % attempts
+        attempts_label.text = "ATTEMPTS: %d" % attempts
 
 func style_score_and_attempts_labels() -> void:
     var custom_font = load("res://fonts/Roboto-Bold.ttf")
@@ -352,3 +352,8 @@ func _on_restart_pressed() -> void:
             btn.disabled = false
     initialize_score_attempts()
     start_new_round()
+
+
+func _on_button_pressed() -> void:
+    var next_scene = load("res://Scenes/main_menu_entry_simple.tscn")
+    get_tree().change_scene_to_packed(next_scene)
