@@ -60,11 +60,11 @@ func initialize_score_attempts() -> void:
 
 func update_score_label() -> void:
     if score_label:
-        score_label.text = "SCORE: %d" % score
+        score_label.text = "SCORE:%d" % score
 
 func update_attempts_label() -> void:
     if attempts_label:
-        attempts_label.text = "ATTEMPTS: %d" % attempts
+        attempts_label.text = "ATTEMPTS:%d" % attempts
 
 func style_score_and_attempts_labels() -> void:
     var custom_font = load("res://fonts/NotoEmoji-VariableFont_wght.ttf")

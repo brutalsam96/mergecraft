@@ -1,5 +1,7 @@
 [gd_scene load_steps=8 format=4 uid="uid://b8cveyh8lcy4n"]
 
+[ext_resource type="FontFile" uid="uid://dj6xeca774x23" path="res://fonts/NotoColorEmoji-Regular.ttf" id="1_61fuj"]
+
 [sub_resource type="SystemFont" id="SystemFont_g72dc"]
 font_weight = 600
 font_stretch = 75
@@ -10,10 +12,6 @@ oversampling = 0.9
 default_base_scale = 3.5
 default_font = SubResource("SystemFont_g72dc")
 default_font_size = 36
-
-[sub_resource type="SystemFont" id="SystemFont_ie26l"]
-font_names = PackedStringArray("Exo")
-subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ms1e4"]
 bg_color = Color(0.893053, 0.926408, 1, 1)
@@ -64,8 +62,8 @@ theme_override_colors/font_pressed_color = Color(0.0745098, 0.0745098, 0.0745098
 theme_override_colors/font_focus_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
 theme_override_colors/font_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
 theme_override_colors/font_outline_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
-theme_override_fonts/font = SubResource("SystemFont_ie26l")
-theme_override_font_sizes/font_size = 45
+theme_override_fonts/font = ExtResource("1_61fuj")
+theme_override_font_sizes/font_size = 36
 theme_override_styles/hover = SubResource("StyleBoxFlat_ms1e4")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_b5ptx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ms1e4")

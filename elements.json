@@ -1,280 +1,280 @@
 {
   "combinations": [
     {
-      "elements": ["Air 💨", "Earth 🌍"],
-      "result": "Dust 🪶",
+      "elements": ["Air💨", "Earth🌍"],
+      "result": "Dust🪶",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Air 💨", "Fire 🔥"],
-      "result": "Smoke 💨",
+      "elements": ["Air💨", "Fire🔥"],
+      "result": "Smoke💨",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Air 💨", "Life 🐣"],
-      "result": "Bird 🕊️",
+      "elements": ["Air💨", "Life🐣"],
+      "result": "Bird🕊️",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Air 💨", "Metal ⚙️"],
-      "result": "Wind Chimes 🎐",
+      "elements": ["Air💨", "Metal⚙️"],
+      "result": "WindChimes🎐",
       "category": "Human",
       "difficulty": 2
     },
     {
-      "elements": ["Air 💨", "Sand 🏖️"],
-      "result": "Dust Storm 🌪️",
+      "elements": ["Air💨", "Sand🏖️"],
+      "result": "DustStorm🌪️",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Air 💨", "Stone 🪨"],
-      "result": "Gravel 🪨",
+      "elements": ["Air💨", "Stone🪨"],
+      "result": "Gravel🪨",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Air 💨", "Sun 🌞"],
-      "result": "Heatwave 🔥",
+      "elements": ["Air💨", "Sun🌞"],
+      "result": "Heatwave🔥",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Air 💨", "Water 💧"],
-      "result": "Rain 🌧️",
+      "elements": ["Air💨", "Water💧"],
+      "result": "Rain🌧️",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Air 💨", "Wood 🌳"],
-      "result": "Flute 🎶",
+      "elements": ["Air💨", "Wood🌳"],
+      "result": "Flute🎶",
       "category": "Human",
       "difficulty": 3
     },
 
     {
-      "elements": ["Earth 🌍", "Fire 🔥"],
-      "result": "Lava 🌋",
+      "elements": ["Earth🌍", "Fire🔥"],
+      "result": "Lava🌋",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Earth 🌍", "Life 🐣"],
-      "result": "Animal 🐾",
+      "elements": ["Earth🌍", "Life🐣"],
+      "result": "Animal🐾",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Earth 🌍", "Metal ⚙️"],
-      "result": "Ore ⛏️",
+      "elements": ["Earth🌍", "Metal⚙️"],
+      "result": "Ore⛏️",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Earth 🌍", "Sand 🏖️"],
-      "result": "Desert 🐪",
+      "elements": ["Earth🌍", "Sand🏖️"],
+      "result": "Desert🐪",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Earth 🌍", "Stone 🪨"],
-      "result": "Mountain 🏔️",
+      "elements": ["Earth🌍", "Stone🪨"],
+      "result": "Mountain🏔️",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Earth 🌍", "Sun 🌞"],
-      "result": "Fertile Soil 🌱",
+      "elements": ["Earth🌍", "Sun🌞"],
+      "result": "FertileSoil🌱",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Earth 🌍", "Water 💧"],
-      "result": "Mud 🏺",
+      "elements": ["Earth🌍", "Water💧"],
+      "result": "Mud🏺",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Earth 🌍", "Wood 🌳"],
-      "result": "Forest 🌲",
+      "elements": ["Earth🌍", "Wood🌳"],
+      "result": "Forest🌲",
       "category": "Nature",
       "difficulty": 2
     },
 
     {
-      "elements": ["Fire 🔥", "Life 🐣"],
-      "result": "Phoenix 🦅",
+      "elements": ["Fire🔥", "Life🐣"],
+      "result": "Phoenix🦅",
       "category": "Myth",
       "difficulty": 4
     },
     {
-      "elements": ["Fire 🔥", "Metal ⚙️"],
-      "result": "Sword ⚔️",
+      "elements": ["Fire🔥", "Metal⚙️"],
+      "result": "Sword⚔️",
       "category": "Human",
       "difficulty": 4
     },
     {
-      "elements": ["Fire 🔥", "Sand 🏖️"],
-      "result": "Glass 🪟",
+      "elements": ["Fire🔥", "Sand🏖️"],
+      "result": "Glass🪟",
       "category": "Human",
       "difficulty": 3
     },
     {
-      "elements": ["Fire 🔥", "Stone 🪨"],
-      "result": "Obsidian 🖤",
+      "elements": ["Fire🔥", "Stone🪨"],
+      "result": "Obsidian🖤",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Fire 🔥", "Sun 🌞"],
-      "result": "Solar Flare 🌟",
+      "elements": ["Fire🔥", "Sun🌞"],
+      "result": "SolarFlare🌟",
       "category": "Nature",
       "difficulty": 4
     },
     {
-      "elements": ["Fire 🔥", "Water 💧"],
-      "result": "Steam ♨️",
+      "elements": ["Fire🔥", "Water💧"],
+      "result": "Steam♨️",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Fire 🔥", "Wood 🌳"],
-      "result": "Charcoal 🌑",
+      "elements": ["Fire🔥", "Wood🌳"],
+      "result": "Charcoal🌑",
       "category": "Human",
       "difficulty": 2
     },
 
     {
-      "elements": ["Life 🐣", "Metal ⚙️"],
-      "result": "Golem 🤖",
+      "elements": ["Life🐣", "Metal⚙️"],
+      "result": "Golem🤖",
       "category": "Myth",
       "difficulty": 4
     },
     {
-      "elements": ["Life 🐣", "Sand 🏖️"],
-      "result": "Cactus 🌵",
+      "elements": ["Life🐣", "Sand🏖️"],
+      "result": "Cactus🌵",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Life 🐣", "Stone 🪨"],
-      "result": "Moss 🍀",
+      "elements": ["Life🐣", "Stone🪨"],
+      "result": "Moss🍀",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Life 🐣", "Sun 🌞"],
-      "result": "Photosynthesis 🍃",
+      "elements": ["Life🐣", "Sun🌞"],
+      "result": "Photosynthesis🍃",
       "category": "Science",
       "difficulty": 3
     },
     {
-      "elements": ["Life 🐣", "Water 💧"],
-      "result": "Algae 🦠",
+      "elements": ["Life🐣", "Water💧"],
+      "result": "Algae🦠",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Life 🐣", "Wood 🌳"],
-      "result": "Fruit 🍎",
+      "elements": ["Life🐣", "Wood🌳"],
+      "result": "Fruit🍎",
       "category": "Nature",
       "difficulty": 2
     },
 
     {
-      "elements": ["Metal ⚙️", "Sand 🏖️"],
-      "result": "Hourglass ⏳",
+      "elements": ["Metal⚙️", "Sand🏖️"],
+      "result": "Hourglass⏳",
       "category": "Human",
       "difficulty": 3
     },
     {
-      "elements": ["Metal ⚙️", "Stone 🪨"],
-      "result": "Statue 🗿",
+      "elements": ["Metal⚙️", "Stone🪨"],
+      "result": "Statue🗿",
       "category": "Human",
       "difficulty": 3
     },
     {
-      "elements": ["Metal ⚙️", "Sun 🌞"],
-      "result": "Gold 🏆",
+      "elements": ["Metal⚙️", "Sun🌞"],
+      "result": "Gold🏆",
       "category": "Nature",
       "difficulty": 4
     },
     {
-      "elements": ["Metal ⚙️", "Water 💧"],
-      "result": "Rust 🍂",
+      "elements": ["Metal⚙️", "Water💧"],
+      "result": "Rust🍂",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Metal ⚙️", "Wood 🌳"],
-      "result": "Shield 🛡️",
+      "elements": ["Metal⚙️", "Wood🌳"],
+      "result": "Shield🛡️",
       "category": "Human",
       "difficulty": 3
     },
 
     {
-      "elements": ["Sand 🏖️", "Stone 🪨"],
-      "result": "Sandstone 🏜️",
+      "elements": ["Sand🏖️", "Stone🪨"],
+      "result": "Sandstone🏜️",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Sand 🏖️", "Sun 🌞"],
-      "result": "Dune 🌅",
+      "elements": ["Sand🏖️", "Sun🌞"],
+      "result": "Dune🌅",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Sand 🏖️", "Water 💧"],
-      "result": "Quicksand 🕳️",
+      "elements": ["Sand🏖️", "Water💧"],
+      "result": "Quicksand🕳️",
       "category": "Nature",
       "difficulty": 3
     },
     {
-      "elements": ["Sand 🏖️", "Wood 🌳"],
-      "result": "Sandpaper 🪣",
+      "elements": ["Sand🏖️", "Wood🌳"],
+      "result": "Sandpaper🪣",
       "category": "Human",
       "difficulty": 2
     },
 
     {
-      "elements": ["Stone 🪨", "Sun 🌞"],
-      "result": "Sundial 🕰️",
+      "elements": ["Stone🪨", "Sun🌞"],
+      "result": "Sundial🕰️",
       "category": "Human",
       "difficulty": 3
     },
     {
-      "elements": ["Stone 🪨", "Water 💧"],
-      "result": "Pebbles 🟤",
+      "elements": ["Stone🪨", "Water💧"],
+      "result": "Pebbles🟤",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Stone 🪨", "Wood 🌳"],
-      "result": "Hut 🛖",
+      "elements": ["Stone🪨", "Wood🌳"],
+      "result": "Hut🛖",
       "category": "Human",
       "difficulty": 2
     },
 
     {
-      "elements": ["Sun 🌞", "Water 💧"],
-      "result": "Rainbow 🌈",
+      "elements": ["Sun🌞", "Water💧"],
+      "result": "Rainbow🌈",
       "category": "Nature",
       "difficulty": 2
     },
     {
-      "elements": ["Sun 🌞", "Wood 🌳"],
-      "result": "Growth 🌱",
+      "elements": ["Sun🌞", "Wood🌳"],
+      "result": "Growth🌱",
       "category": "Nature",
       "difficulty": 2
     },
 
     {
-      "elements": ["Water 💧", "Wood 🌳"],
-      "result": "Boat 🚣",
+      "elements": ["Water💧", "Wood🌳"],
+      "result": "Boat🚣",
       "category": "Human",
       "difficulty": 3
     }

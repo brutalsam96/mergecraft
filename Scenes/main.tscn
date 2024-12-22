@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://62vcyoppjt27"]
+[gd_scene load_steps=24 format=3 uid="uid://62vcyoppjt27"]
 
 [ext_resource type="Script" path="res://Scripts/main4.gd" id="1_aeks7"]
 [ext_resource type="AudioStream" uid="uid://6235cdprl3aw" path="res://assets/game-music-loop-9-145494.mp3" id="2_7l8t5"]
@@ -6,6 +6,187 @@
 [ext_resource type="PackedScene" uid="uid://b8cveyh8lcy4n" path="res://Scenes/button.tscn" id="2_vpvty"]
 [ext_resource type="AudioStream" uid="uid://3yty8owqyfr4" path="res://assets/correct.ogg" id="5_2ol1t"]
 [ext_resource type="AudioStream" uid="uid://buhn3g5som1gj" path="res://assets/wrong.ogg" id="6_isjr3"]
+[ext_resource type="FontFile" uid="uid://dj6xeca774x23" path="res://fonts/NotoColorEmoji-Regular.ttf" id="7_ah4ju"]
+
+[sub_resource type="FontFile" id="FontFile_qqq1h"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_iq68w"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_h75pu"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_817n5"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_tqsxm"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_38yym"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_fs1y7"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_v3o8h"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_5fj4n"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
+
+[sub_resource type="FontFile" id="FontFile_8dlin"]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/45/0/ascent = 0.0
+cache/0/45/0/descent = 0.0
+cache/0/45/0/underline_position = 0.0
+cache/0/45/0/underline_thickness = 0.0
+cache/0/45/0/scale = 1.0
+cache/0/36/0/ascent = 0.0
+cache/0/36/0/descent = 0.0
+cache/0/36/0/underline_position = 0.0
+cache/0/36/0/underline_thickness = 0.0
+cache/0/36/0/scale = 1.0
 
 [sub_resource type="SystemFont" id="SystemFont_l2wjn"]
 
@@ -52,6 +233,7 @@ offset_left = -389.0
 offset_top = -806.0
 offset_right = -139.0
 offset_bottom = -706.0
+theme_override_fonts/font = SubResource("FontFile_qqq1h")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button2" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -59,6 +241,7 @@ offset_left = -414.0
 offset_top = -656.0
 offset_right = -164.0
 offset_bottom = -556.0
+theme_override_fonts/font = SubResource("FontFile_iq68w")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button3" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -66,6 +249,7 @@ offset_left = -464.0
 offset_top = -506.0
 offset_right = -214.0
 offset_bottom = -406.0
+theme_override_fonts/font = SubResource("FontFile_h75pu")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button4" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -73,6 +257,7 @@ offset_left = -414.0
 offset_top = -356.0
 offset_right = -164.0
 offset_bottom = -256.0
+theme_override_fonts/font = SubResource("FontFile_817n5")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button5" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -80,6 +265,7 @@ offset_left = -389.0
 offset_top = -206.0
 offset_right = -139.0
 offset_bottom = -106.0
+theme_override_fonts/font = SubResource("FontFile_tqsxm")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button6" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -87,6 +273,7 @@ offset_left = 125.0
 offset_top = -806.0
 offset_right = 375.0
 offset_bottom = -706.0
+theme_override_fonts/font = SubResource("FontFile_38yym")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button7" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -94,6 +281,7 @@ offset_left = 158.0
 offset_top = -656.0
 offset_right = 408.0
 offset_bottom = -556.0
+theme_override_fonts/font = SubResource("FontFile_fs1y7")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button8" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -101,6 +289,7 @@ offset_left = 200.0
 offset_top = -506.0
 offset_right = 450.0
 offset_bottom = -406.0
+theme_override_fonts/font = SubResource("FontFile_v3o8h")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button9" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -108,6 +297,7 @@ offset_left = 158.0
 offset_top = -356.0
 offset_right = 408.0
 offset_bottom = -256.0
+theme_override_fonts/font = SubResource("FontFile_5fj4n")
 metadata/_edit_use_anchors_ = true
 
 [node name="Button10" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
@@ -115,12 +305,14 @@ offset_left = 133.0
 offset_top = -206.0
 offset_right = 383.0
 offset_bottom = -106.0
+theme_override_fonts/font = SubResource("FontFile_8dlin")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label4" type="Label" parent="."]
 offset_top = -1049.0
 offset_right = 284.0
 offset_bottom = -920.0
+theme_override_fonts/font = ExtResource("7_ah4ju")
 label_settings = SubResource("LabelSettings_ij3gf")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -131,6 +323,7 @@ offset_left = -360.0
 offset_top = -1840.0
 offset_right = 328.0
 offset_bottom = -1634.0
+theme_override_fonts/font = ExtResource("7_ah4ju")
 label_settings = SubResource("LabelSettings_ij3gf")
 horizontal_alignment = 1
 vertical_alignment = 1
