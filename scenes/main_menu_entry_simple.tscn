@@ -116,3 +116,4 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_h26sj")
 text = "HELP"
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button3" to="." method="_on_button_3_pressed"]

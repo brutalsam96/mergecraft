@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://bi06ol6stksnc"]
+
+[ext_resource type="Script" path="res://Scripts/help.gd" id="1_70e6c"]
+[ext_resource type="VideoStream" path="res://assets/video.ogv" id="1_bwk3g"]
+
+[sub_resource type="SystemFont" id="SystemFont_ybfic"]
+font_names = PackedStringArray("Exo")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m7hdx"]
+bg_color = Color(0, 0, 0, 0.435294)
+border_color = Color(0.103744, 0.103744, 0.103743, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+corner_detail = 16
+anti_aliasing_size = 1.21
+
+[sub_resource type="SystemFont" id="SystemFont_cdlms"]
+font_names = PackedStringArray("Exo")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wcssk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f5g2b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2gbg0"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_70e6c")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.5
+offset_right = 5.5
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("1_bwk3g")
+autoplay = true
+expand = true
+loop = true
+
+[node name="BoxContainer" type="BoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 150.0
+offset_top = 500.0
+offset_right = -150.0
+offset_bottom = -500.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.340339, 0.340339, 0.340339, 1)
+theme_override_fonts/font = SubResource("SystemFont_ybfic")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_m7hdx")
+text = "How to Play MergeCraft:
+	•	Objective: Merge two objects to create a new one.
+	•	Check the top of the screen to see which item needs to be created.
+	•	Drag two objects from the list to the central area.
+	•	If the combination is correct, you earn points. If it’s wrong, you lose one attempt.
+	•	You have only 3 attempts, so choose carefully!
+	•	Score as high as possible and climb the leaderboard!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+clip_text = true
+text_overrun_behavior = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_right = -849.0
+offset_bottom = -1779.0
+focus_mode = 0
+theme_override_colors/font_disabled_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_hover_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_pressed_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_focus_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_fonts/font = SubResource("SystemFont_cdlms")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxEmpty_wcssk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_f5g2b")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2gbg0")
+text = "Back"
+alignment = 0
+vertical_icon_alignment = 0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
