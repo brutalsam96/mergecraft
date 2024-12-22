@@ -2,7 +2,7 @@ extends Control
 
 
 func _ready():
-    pass
+	pass
 
 
 
@@ -12,5 +12,5 @@ func _ready():
 
 
 func _on_button_pressed() -> void:
-    var next_scene = load("res://Scenes/main.tscn")
-    get_tree().change_scene_to_packed(next_scene)
+	var next_scene = load("res://Scenes/main.tscn")
+	get_tree().change_scene_to_packed(next_scene)

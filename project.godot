@@ -11,8 +11,9 @@ config_version=5
 [application]
 
 config/name="mergecraft"
-run/main_scene="res://scenes/main_menu_entry_simple.tscn"
+run/main_scene="res://Scenes/main_menu_entry_simple.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
+boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.svg"
 
 [autoload]
