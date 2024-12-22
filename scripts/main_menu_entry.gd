@@ -14,3 +14,8 @@ func _ready():
 func _on_button_pressed() -> void:
 	var next_scene = load("res://Scenes/main.tscn")
 	get_tree().change_scene_to_packed(next_scene)
+
+
+func _on_button_3_pressed() -> void:
+	var next_scene = load("res://Scenes/help.tscn")
+	get_tree().change_scene_to_packed(next_scene)
