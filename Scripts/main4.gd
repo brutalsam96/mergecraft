@@ -1,143 +1,245 @@
 extends Node2D
 
+# ------------------------------------------------------------------
 # Nodes
+# ------------------------------------------------------------------
 @onready var button_container: Node2D = $ButtonsGroup
 @onready var result_label: Label = $Label4
 
-
-
+# ------------------------------------------------------------------
 # Game data
-var combinations: Array = []           # Loaded combinations
-var current_combination: Dictionary = {}    # Stores the current correct combination
-var all_elements: Array = []           # List of all elements for wrong answers
-var selected_buttons: Array = []       # Tracks selected buttons during drag
-var dragged_elements: Dictionary = {}  # Prevents multiple selections of the same button during a drag
-var is_dragging: bool = false          # Tracks drag state
-var current_dragged_button: Button = null   # Tracks the button being dragged
-var element_1: Button = null           # Tracks the first element snapped to the center
-var drop_spots
+# ------------------------------------------------------------------
+var combinations: Array = []                  # All loaded combos
+var current_combination: Dictionary = {}      # The current correct combo
+var all_elements: Array = []                  # All possible elements
+var drop_spots: Array = []                    # Areas to snap onto
+
+# ------------------------------------------------------------------
+# Drag tracking
+# ------------------------------------------------------------------
+var is_dragging: bool = false
+var current_dragged_button: Button = null
+var original_position_map: Dictionary = {}  # Maps button -> original_position
+
+# ------------------------------------------------------------------
+# Snap tracking: we only need two items
+# ------------------------------------------------------------------
+var element_1: Button = null
+var original_pos_element_1: Vector2 = Vector2.ZERO
 
 func _ready():
+    # (1) Fetch drop spots from group
     drop_spots = get_tree().get_nodes_in_group("drop_spot_group")
-    print(drop_spots)
-    # Load combinations from GameState
+
+    # (2) Load combinations from GameState if needed
     if GameState.combinations.size() == 0:
         GameState.load_combinations()
     combinations = GameState.combinations
     all_elements = get_all_unique_elements(combinations)
+    
+    # (3) Capture each button’s original position
+    for child in button_container.get_children():
+        if child is Button:
+            original_position_map[child] = child.global_position
 
-    # Start the first round
+    # (4) Start the first round
     start_new_round()
 
-# Get a list of all unique elements from the combinations
-func get_all_unique_elements(all_combinations: Array) -> Array:
-    var elements: Array = []
-    for combination in all_combinations:
-        for element in combination["elements"]:
-            if not elements.has(element):
-                elements.append(element)
+
+# ------------------------------------------------------------------
+# Utility
+# ------------------------------------------------------------------
+
+func get_all_unique_elements(all_combos: Array) -> Array:
+    var elements := []
+    for combo in all_combos:
+        for el in combo["elements"]:
+            if not elements.has(el):
+                elements.append(el)
     return elements
 
-# Start a new round by assigning elements and resetting the result label
 func start_new_round() -> void:
+    # Pick a random combination
     current_combination = combinations[randi() % combinations.size()]
+
     if result_label:
-        result_label.text = "Find: " + str(current_combination.get("result", "Unknown"))
-    selected_buttons.clear()
+        result_label.text = "Find: " + str(current_combination.get("result", "???"))
+
+    # Reset any leftover states
     element_1 = null
+    original_pos_element_1 = Vector2.ZERO
 
-    assign_elements_to_buttons()
+    # Also reset all buttons (positions, text, meta, etc.)
+    reset_and_assign_buttons()
 
-# Assign 2 correct and 8 wrong elements to premade buttons
-func assign_elements_to_buttons() -> void:
+
+# Assign 2 correct + 8 random wrong
+func reset_and_assign_buttons() -> void:
+    # Gather references
     var buttons = button_container.get_children()
 
-    # Select 2 correct elements
-    var correct_elements: Array = current_combination.get("elements", []).duplicate()
+    # Return each button to its original position & clear any tween leftovers
+    # (In case a tween was half-finished or a button was left snapped)
+    for btn in buttons:
+        if btn is Button:
+            if original_position_map.has(btn):
+                btn.global_position = original_position_map[btn]
+            # Also reset scale, rotation, or anything else if needed
+            btn.set_scale(Vector2.ONE)
+            # If you want to kill any leftover tweens on the button:
+            for tween in btn.get_tree().get_nodes_in_group("tween"):
+                # This might be overkill, but ensures no leftover animations
+                if tween.is_a_parent_of(btn):
+                    tween.kill()
+
+    # Determine 2 correct
+    var correct_elements = current_combination.get("elements", []).duplicate()
     correct_elements.shuffle()
     correct_elements = correct_elements.slice(0, 2)
 
-    # Select 8 wrong elements
-    var wrong_elements: Array = all_elements.filter(func(e):
+    # Determine 8 wrong
+    var wrong_elements = all_elements.filter(func(e):
         return not correct_elements.has(e)
     )
     wrong_elements.shuffle()
     wrong_elements = wrong_elements.slice(0, 8)
 
-    # Combine and shuffle all elements
-    var button_elements: Array = correct_elements + wrong_elements
+    # Combine & shuffle
+    var button_elements = correct_elements + wrong_elements
     button_elements.shuffle()
 
-    # Assign elements to buttons
-    for i in range(min(buttons.size(), button_elements.size())):
-        var button = buttons[i]
-        if button is Button:
-            button.set_meta("element", button_elements[i])
-            button.text = button_elements[i]
+    # Assign to each button
+    for i in range(buttons.size()):
+        if i < button_elements.size():
+            var b = buttons[i]
+            if b is Button:
+                b.set_meta("element", button_elements[i])
+                b.text = button_elements[i]
 
-# Handle drag-and-drop input
+# ------------------------------------------------------------------
+# Input Handling
+# ------------------------------------------------------------------
+
 func _input(event):
-    if event is InputEventMouseButton:
-        if event.button_index == MOUSE_BUTTON_LEFT:
-            var button = get_button_under_mouse()
-            var area2d = null
-            if button:
-                area2d = button.get_node("Area2D")
-            if event.pressed:
-                if button:
-                    current_dragged_button = button
-                    is_dragging = true
-            else:
-                if is_dragging and current_dragged_button:
-                    current_dragged_button = null
-                    is_dragging = false
-                    for drop_spot in drop_spots:
-                        if area2d and drop_spot.get_overlapping_areas() and drop_spot.get_overlapping_areas().has(area2d) and current_dragged_button != null:
-                            var snap_position = drop_spot.global_position
-                            current_dragged_button.global_position = snap_position
-                            var tween = create_tween()
-                            tween.set_trans(Tween.TRANS_LINEAR)
-                            tween.tween_property(current_dragged_button, "global_position", snap_position, 0.2)
-                            await tween.finished
-                            if element_1 == null:
-                                element_1 = current_dragged_button
-                            else:
-                                combine_elements(element_1, current_dragged_button)
-    elif event is InputEventMouseMotion and is_dragging and current_dragged_button:
-        var new_position = current_dragged_button.position + event.relative
-        # Add bounds checking
-        new_position.x = clamp(new_position.x, 0, get_viewport_rect().size.x)
-        new_position.y = clamp(new_position.y, 0, get_viewport_rect().size.y)
-        current_dragged_button.position = new_position
+    if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+        if event.pressed:
+            # Mouse down
+            var btn = get_button_under_mouse()
+            if btn:
+                is_dragging = true
+                current_dragged_button = btn
+        else:
+            # Mouse released
+            if is_dragging and current_dragged_button:
+                is_dragging = false
+                handle_snap(current_dragged_button)
+                current_dragged_button = null
 
-# Get the button under the mouse cursor
+    elif event is InputEventMouseMotion and is_dragging and current_dragged_button:
+        # Drag the button
+        var b = current_dragged_button
+        b.position += event.relative
+
+        # Optionally clamp inside viewport
+        var vp_size = get_viewport_rect().size
+        b.position.x = clamp(b.position.x, 0, vp_size.x)
+        b.position.y = clamp(b.position.y, 0, vp_size.y)
+
+
 func get_button_under_mouse() -> Button:
+    var mp = get_global_mouse_position()
     for child in button_container.get_children():
-        if child is Button and child.get_global_rect().has_point(get_global_mouse_position()):
-            return child
+        if child is Button:
+            if child.get_global_rect().has_point(mp):
+                return child
     return null
 
+# ------------------------------------------------------------------
+# Snapping Logic
+# ------------------------------------------------------------------
 
-# Combine elements and check the result
-func combine_elements(element_one: Button, element_two: Button):
-    var combined = [element_one.get_meta("element"), element_two.get_meta("element")]
+func handle_snap(btn: Button) -> void:
+    # Check if the button overlaps any drop_spot
+    var area2d = btn.get_node("Area2D") if btn.has_node("Area2D") else null
+
+    var snapped_spot: Node = null
+    if area2d:
+        for ds in drop_spots:
+            # If the spot's overlapping_areas includes our button's area
+            if ds.get_overlapping_areas().has(area2d):
+                snapped_spot = ds
+                break
+
+    if snapped_spot:
+        # Snap the button to the drop_spot
+        snap_button_to_spot(btn, snapped_spot)
+    else:
+        # No snap -> animate back to original position
+        animate_back(btn, original_position_map[btn])
+
+
+# Snap button to drop_spot
+func snap_button_to_spot(btn: Button, ds: Node) -> void:
+    var target_pos = ds.global_position
+    
+    # Animate to drop spot
+    var tween = create_tween()
+    tween.tween_property(btn, "global_position", target_pos, 0.2)
+    await tween.finished
+
+    # If we didn't have an element_1 yet, store this as element_1
+    if element_1 == null:
+        element_1 = btn
+        original_pos_element_1 = original_position_map[btn]
+
+    else:
+        # We have a second element
+        var element_2 = btn
+        var original_pos_element_2 = original_position_map[element_2]
+
+        # 1) Check correctness
+        var _is_correct = check_combination_correctness(element_1, element_2)
+
+        # 2) Animate both back
+        await animate_back(element_1, original_pos_element_1)
+        await animate_back(element_2, original_pos_element_2)
+
+        # 3) Clear out for next usage
+        element_1 = null
+
+        # 4) Show result label for a bit
+        await get_tree().create_timer(1.0).timeout
+
+        # 5) Start new round
+        start_new_round()
+
+
+func check_combination_correctness(elem1: Button, elem2: Button) -> bool:
+    var combined = [elem1.get_meta("element"), elem2.get_meta("element")]
     combined.sort()
-    var correct_combination = current_combination.get("elements", []).duplicate()
-    correct_combination.sort()
 
-    if combined == correct_combination:
+    var correct_combo = current_combination.get("elements", []).duplicate()
+    correct_combo.sort()
+
+    if combined == correct_combo:
         if result_label:
             result_label.text = "Correct!"
+        return true
     else:
         if result_label:
-            result_label.text = "Incorrect! The correct answer was: " + str(current_combination.get("elements", []))
+            result_label.text = "Incorrect! The correct was: %s" % str(current_combination["elements"])
+        return false
 
-    # Reset elements
-    element_1 = null
-    selected_buttons.clear()
-    await get_tree().create_timer(2.0).timeout
-    start_new_round()
+
+# ------------------------------------------------------------------
+# Animation Helper
+# ------------------------------------------------------------------
+func animate_back(button: Button, target_pos: Vector2) -> void:
+    var tween = create_tween()
+    tween.tween_property(button, "global_position", target_pos, 0.2)
+    await tween.finished
 
 
 func _process(_delta):
+    # Optional drawing or debug
     queue_redraw()
