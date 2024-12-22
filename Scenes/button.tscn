@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8cveyh8lcy4n"]
+[gd_scene load_steps=7 format=3 uid="uid://b8cveyh8lcy4n"]
 
 [sub_resource type="SystemFont" id="SystemFont_g72dc"]
 font_weight = 600
@@ -10,6 +10,9 @@ oversampling = 0.9
 default_base_scale = 3.5
 default_font = SubResource("SystemFont_g72dc")
 default_font_size = 36
+
+[sub_resource type="SystemFont" id="SystemFont_ie26l"]
+font_names = PackedStringArray("Exo")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ms1e4"]
 bg_color = Color(0.893053, 0.926408, 1, 1)
@@ -29,7 +32,7 @@ expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5ptx"]
-bg_color = Color(0.713169, 0.837863, 1, 1)
+bg_color = Color(0.789435, 0.880818, 1, 1)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
@@ -45,11 +48,20 @@ corner_detail = 16
 size = Vector2(248, 104)
 
 [node name="Button" type="Button"]
-modulate = Color(0.978018, 0.58718, 0.753872, 1)
 texture_filter = 2
 offset_right = 250.0
 offset_bottom = 100.0
+focus_mode = 0
 theme = SubResource("Theme_uphr4")
+theme_override_colors/font_disabled_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_hover_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_pressed_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_focus_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_colors/font_outline_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_fonts/font = SubResource("SystemFont_ie26l")
+theme_override_font_sizes/font_size = 45
 theme_override_styles/hover = SubResource("StyleBoxFlat_ms1e4")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_b5ptx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ms1e4")

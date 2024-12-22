@@ -11,76 +11,78 @@ font = SubResource("SystemFont_l2wjn")
 font_size = 81
 
 [node name="Main" type="Node2D"]
+position = Vector2(525, 1918)
 script = ExtResource("1_aeks7")
 
 [node name="drop_spot" parent="." instance=ExtResource("2_ealtm")]
-position = Vector2(556, 746)
+position = Vector2(0, -1158)
 
 [node name="ButtonsGroup" type="Node2D" parent="."]
+position = Vector2(0, 14)
 
 [node name="Button" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 159.0
-offset_top = 1143.0
-offset_right = 409.0
-offset_bottom = 1243.0
+offset_left = -389.0
+offset_top = -806.0
+offset_right = -139.0
+offset_bottom = -706.0
 
 [node name="Button2" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 134.0
-offset_top = 1293.0
-offset_right = 384.0
-offset_bottom = 1393.0
+offset_left = -414.0
+offset_top = -656.0
+offset_right = -164.0
+offset_bottom = -556.0
 
 [node name="Button3" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 84.0
-offset_top = 1443.0
-offset_right = 334.0
-offset_bottom = 1543.0
+offset_left = -464.0
+offset_top = -506.0
+offset_right = -214.0
+offset_bottom = -406.0
 
 [node name="Button4" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 134.0
-offset_top = 1593.0
-offset_right = 384.0
-offset_bottom = 1693.0
+offset_left = -414.0
+offset_top = -356.0
+offset_right = -164.0
+offset_bottom = -256.0
 
 [node name="Button5" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 159.0
-offset_top = 1743.0
-offset_right = 409.0
-offset_bottom = 1843.0
+offset_left = -389.0
+offset_top = -206.0
+offset_right = -139.0
+offset_bottom = -106.0
 
 [node name="Button6" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 673.0
-offset_top = 1143.0
-offset_right = 923.0
-offset_bottom = 1243.0
+offset_left = 125.0
+offset_top = -806.0
+offset_right = 375.0
+offset_bottom = -706.0
 
 [node name="Button7" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 706.0
-offset_top = 1293.0
-offset_right = 956.0
-offset_bottom = 1393.0
+offset_left = 158.0
+offset_top = -656.0
+offset_right = 408.0
+offset_bottom = -556.0
 
 [node name="Button8" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 748.0
-offset_top = 1443.0
-offset_right = 998.0
-offset_bottom = 1543.0
+offset_left = 200.0
+offset_top = -506.0
+offset_right = 450.0
+offset_bottom = -406.0
 
 [node name="Button9" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 706.0
-offset_top = 1593.0
-offset_right = 956.0
-offset_bottom = 1693.0
+offset_left = 158.0
+offset_top = -356.0
+offset_right = 408.0
+offset_bottom = -256.0
 
 [node name="Button10" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
-offset_left = 681.0
-offset_top = 1743.0
-offset_right = 931.0
-offset_bottom = 1843.0
+offset_left = 133.0
+offset_top = -206.0
+offset_right = 383.0
+offset_bottom = -106.0
 
 [node name="Label4" type="Label" parent="."]
-offset_left = 363.0
-offset_top = 14.0
-offset_right = 1051.0
-offset_bottom = 251.0
+offset_left = -338.0
+offset_top = -1801.0
+offset_right = 350.0
+offset_bottom = -1564.0
 label_settings = SubResource("LabelSettings_ij3gf")
