@@ -6,6 +6,12 @@ extends Node2D
 @onready var button_container: Node2D = $ButtonsGroup
 @onready var display_label: Label = $Label
 @onready var result_label: Label = $Label4
+@onready var score_label: Label = $ScoreLabel         # Score Label
+@onready var attempts_label: Label = $AttemptsLabel   # Attempts Label
+@onready var game_over_ui: Control = $GameOverUI     # Game Over UI
+@onready var game_over_label: Label = $GameOverUI/Panel/GameOverLabel
+@onready var play_again_button: Button = $GameOverUI/Panel/PlayAgainButton
+@onready var return_to_menu_button: Button = $GameOverUI/Panel/ReturnToMenuButton
 
 # ------------------------------------------------------------------
 # Constants for Animation
@@ -36,26 +42,142 @@ var original_position_map: Dictionary = {}    # Maps button -> original_position
 var element_1: Button = null
 var original_pos_element_1: Vector2 = Vector2.ZERO
 
+# ------------------------------------------------------------------
+# Score and Attempts
+# ------------------------------------------------------------------
+var score: int = 0
+var attempts: int  # Set your desired starting number of attempts
+
+# ------------------------------------------------------------------
+# Ready Function
+# ------------------------------------------------------------------
 func _ready():
     # (1) Fetch drop spots from group
     drop_spots = get_tree().get_nodes_in_group("drop_spot_group")
-
+    
     # (2) Load combinations from GameState if needed
     if GameState.combinations.size() == 0:
         GameState.load_combinations()
     combinations = GameState.combinations
     all_elements = get_all_unique_elements(combinations)
-
+    
     # (3) Capture each button’s original position
     for child in button_container.get_children():
         if child is Button:
             original_position_map[child] = Vector2(child.global_position.x, -child.global_position.y)
-
+    
     # (4) Style the result label
     style_result_label()
-
-    # (5) Start the first round
+    
+    # (5) Initialize score and attempts
+    initialize_score_attempts()
+    
+    # (6) Style Score and Attempts Labels
+    style_score_and_attempts_labels()
+    
+    # Ensure the Attempts Label is visible
+    if attempts_label:
+        attempts_label.visible = true
+    else:
+        print("Attempts Label not found! Check the node path.")
+    
+    # (7) Connect Game Over Buttons
+    connect_game_over_buttons()
+    
+    # (8) Start the first round
     start_new_round()
+    
+    # Ensure the Game Over UI is hidden initially
+    if game_over_ui:
+        game_over_ui.visible = false
+    else:
+        print("GameOverUI not found! Check the node path.")
+
+# ------------------------------------------------------------------
+# Initialization for Score and Attempts
+# ------------------------------------------------------------------
+
+func initialize_score_attempts() -> void:
+    score = 0
+    attempts = 3  # Set your desired starting number of attempts
+    update_score_label()
+    update_attempts_label()
+    print("Initialized attempts to:", attempts)  # Debugging
+
+func update_score_label() -> void:
+    if score_label:
+        score_label.text = "Score: " + str(score)
+        print("Updated Score Label:", score_label.text)  # Debugging
+    else:
+        print("Score Label is null!")
+
+func update_attempts_label() -> void:
+    if attempts_label:
+        attempts_label.text = "Attempts: " + str(attempts)
+        print("Updated Attempts Label:", attempts_label.text)  # Debugging
+    else:
+        print("Attempts Label is null!")
+
+# ------------------------------------------------------------------
+# Styling Labels with Custom Fonts and Sizes
+# ------------------------------------------------------------------
+
+func style_score_and_attempts_labels() -> void:
+    # Load the custom font
+    var custom_font = load("res://fonts/Roboto-Bold.ttf")
+    if not custom_font:
+        print("Failed to load custom font for Score and Attempts Labels")
+        return
+    custom_font.fixed_size = 36  # Set desired text size
+
+    # Apply the font to Score and Attempts Labels
+    var label_settings = LabelSettings.new()
+    label_settings.font = custom_font
+    label_settings.font_color = Color(1, 1, 1)  # White color
+    
+    if score_label:
+        score_label.label_settings = label_settings
+    else:
+        print("Score Label is null!")
+        
+    if attempts_label:
+        attempts_label.label_settings = label_settings.duplicate()
+    else:
+        print("Attempts Label is null!")
+
+    # Ensure labels are visible
+    if score_label:
+        score_label.visible = true
+    if attempts_label:
+        attempts_label.visible = true
+
+    # Style Game Over Label
+    style_game_over_label(custom_font)
+
+func style_game_over_label(custom_font: FontFile = null) -> void:
+    # Load a larger custom font for Game Over
+    var game_over_font: FontFile = custom_font if custom_font else load("res://fonts/Roboto-Bold.ttf")
+    if not game_over_font:
+        print("Failed to load custom font for Game Over Label")
+        return
+    game_over_font.fixed_size = 48  # Larger text size for emphasis
+
+    # Apply the font to the Game Over Label
+    var label_settings = LabelSettings.new()
+    label_settings.font = game_over_font
+    label_settings.font_color = Color(1, 0, 0)  # Red color for visibility
+    game_over_label.label_settings = label_settings
+    game_over_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    game_over_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    game_over_label.visible = false  # Hidden initially
+
+# ------------------------------------------------------------------
+# Connecting Game Over Buttons
+# ------------------------------------------------------------------
+
+func connect_game_over_buttons() -> void:
+    play_again_button.pressed.connect(_on_PlayAgainButton_pressed)
+    return_to_menu_button.pressed.connect(_on_ReturnToMenuButton_pressed)
 
 # ------------------------------------------------------------------
 # Utility
@@ -70,16 +192,22 @@ func get_all_unique_elements(all_combos: Array) -> Array:
     return elements
 
 func start_new_round() -> void:
+    print("Starting a new round")  # Debugging
     # Pick a random combination
+    if combinations.size() == 0:
+        print("No combinations available!")
+        return
     current_combination = combinations[randi() % combinations.size()]
-
+    
     if display_label:
-        display_label.text = "Find: " + str(current_combination.get("result", "???"))
-
+        display_label.text = str(current_combination.get("result", "???"))
+    else:
+        print("Display Label is null!")
+    
     # Reset any leftover states
     element_1 = null
     original_pos_element_1 = Vector2.ZERO
-
+    
     # Also reset all buttons (positions, text, meta, etc.)
     reset_and_assign_buttons()
 
@@ -122,6 +250,8 @@ func reset_and_assign_buttons() -> void:
             if b is Button:
                 b.set_meta("element", button_elements[i])
                 b.text = button_elements[i]
+        else:
+            print("Not enough elements to assign to buttons.")
 
 # ------------------------------------------------------------------
 # Input Handling
@@ -175,7 +305,7 @@ func handle_snap(btn: Button) -> void:
     if area2d:
         for ds in drop_spots:
             # If the spot's overlapping_areas includes our button's area
-            if ds.get_overlapping_areas().has(btn.get_node("Area2D")):
+            if ds.get_overlapping_areas().has(area2d):
                 snapped_spot = ds
                 break
 
@@ -193,12 +323,12 @@ func handle_snap(btn: Button) -> void:
 # Snap button to drop_spot
 func snap_button_to_spot(btn: Button, ds: Node) -> void:
     var collision_shape = ds.get_node("CollisionShape2D")
-    var ds_size = Vector2.ZERO
+    var _ds_size = Vector2.ZERO
     if collision_shape:
         if collision_shape.shape is RectangleShape2D:
-            ds_size = collision_shape.shape.extents * 2
+            _ds_size = collision_shape.shape.extents * 2
         elif collision_shape.shape is CircleShape2D:
-            ds_size = Vector2(collision_shape.shape.radius * 2, collision_shape.shape.radius * 2)
+            _ds_size = Vector2(collision_shape.shape.radius * 2, collision_shape.shape.radius * 2)
     var target_pos = Vector2(ds.global_position.x, ds.global_position.y)  # Adjust for bottom-center
     target_pos += Vector2(-btn.size.x / 2, -btn.size.y / 2)  # Center button on drop spot
 
@@ -257,23 +387,59 @@ func merge_elements(elem1: Button, elem2: Button, _orig_pos1: Vector2, _orig_pos
     # Handle the result display
     display_result_label(elem1, elem2)
 
-func display_result_label(elem1: Button, elem2: Button) -> void:
+# ------------------------------------------------------------------
+# Merge Result and Score/Attempts Update
+# ------------------------------------------------------------------
+
+func display_result_label(elem1: Button, elem2: Button, font_size: int = 36) -> void:
     # Check combination correctness
     var is_correct = check_combination_correctness(elem1, elem2)
 
-    # Update the result label
+    # Update the result label text and color based on correctness
     if is_correct:
-        result_label.text = "Correct!"
+        result_label.text = "Correct! " + elem1.text + " + " + elem2.text + " = " + current_combination.get("result", "")
         result_label.modulate = Color(0, 1, 0)  # Green color
+
+        # Update score based on difficulty
+        var difficulty = current_combination.get("difficulty", 1)  # Assume each combination has a 'difficulty' key
+        score += 10 * difficulty  # Example scoring: 10 points per difficulty level
+        update_score_label()
     else:
         var correct_elements = current_combination.get("elements", [])
         result_label.text = "Incorrect! Correct: " + str(correct_elements)
         result_label.modulate = Color(1, 0, 0)  # Red color
 
-    # Center the result label on the screen
-    var screen_center = get_viewport_rect().size / 2
-    result_label.global_position = screen_center
+        # Deduct an attempt
+        attempts -= 1
+        update_attempts_label()
+
+        if attempts <= 0:
+            handle_game_over()
+
+    # Set the font size and style
+    var label_settings = LabelSettings.new()
+    label_settings.font = load("res://fonts/Roboto-Bold.ttf")
+    if not label_settings.font:
+        print("Failed to load font for Result Label")
+    label_settings.font_size = font_size
+    result_label.label_settings = label_settings
+
+    # Position the result label at the merge position
+    var corrected_merge_position = Vector2(MERGE_POSITION.x, -MERGE_POSITION.y)
+    result_label.pivot_offset = result_label.size / 2
+    result_label.global_position = corrected_merge_position
+
+    result_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    result_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+
+    # Make the label visible and animate it
     result_label.visible = true
+
+    # Create a tween for the flashy effect
+    var tween = create_tween()
+    tween.tween_property(result_label, "scale", Vector2(1.2, 1.2), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(result_label, "scale", Vector2(0.7, 0.7), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(result_label, "modulate:a", 1.0, FADE_DURATION).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 
     # Wait for the result display duration
     await get_tree().create_timer(RESULT_DISPLAY_DURATION).timeout
@@ -284,14 +450,74 @@ func display_result_label(elem1: Button, elem2: Button) -> void:
     # Reset buttons' visibility and positions
     elem1.visible = true
     elem2.visible = true
-    elem1.global_position = original_position_map[elem1]
-    elem2.global_position = original_position_map[elem2]
+    elem1.global_position = Vector2(original_position_map[elem1].x, -original_position_map[elem1].y)
+    elem2.global_position = Vector2(original_position_map[elem2].x, -original_position_map[elem2].y)
 
     # Start a new round
     start_new_round()
 
     # Re-enable input
     set_process_input(true)
+
+# ------------------------------------------------------------------
+# Handle Game Over
+# ------------------------------------------------------------------
+
+func handle_game_over() -> void:
+    print("Game Over triggered")  # Debugging
+    # Update Game Over Label with final score
+    game_over_label.text = "Game Over!\nFinal Score: " + str(score)
+    game_over_label.visible = true
+
+    # Show the Game Over UI
+    game_over_ui.visible = true
+
+    # Disable all buttons to prevent further interactions
+    for btn in button_container.get_children():
+        if btn is Button:
+            btn.disabled = true
+
+    # Pause the game
+    get_tree().paused = true
+
+# ------------------------------------------------------------------
+# Game Over Button Callbacks
+# ------------------------------------------------------------------
+
+func _on_PlayAgainButton_pressed() -> void:
+    print("Play Again button pressed")  # Debugging
+    # Reset score and attempts
+    initialize_score_attempts()
+
+    # Hide Game Over UI
+    game_over_ui.visible = false
+
+    # Re-enable all buttons
+    for btn in button_container.get_children():
+        if btn is Button:
+            btn.disabled = false
+
+    # Reset Game Over Label
+    game_over_label.visible = false
+
+    # Resume the game
+    get_tree().paused = false
+
+    # Start a new round
+    start_new_round()
+
+func _on_ReturnToMenuButton_pressed() -> void:
+    print("Return to Menu button pressed")  # Debugging
+    # Optionally, save the score or perform other cleanup tasks here
+
+    # Load the main menu scene
+    # Ensure you have a main menu scene at 'res://MainMenu.tscn'
+    get_tree().paused = false  # Unpause before changing scenes
+    get_tree().change_scene("res://MainMenu.tscn")
+
+# ------------------------------------------------------------------
+# Check Combination Correctness
+# ------------------------------------------------------------------
 
 func check_combination_correctness(elem1: Button, elem2: Button) -> bool:
     var combined = [elem1.get_meta("element"), elem2.get_meta("element")]
@@ -321,10 +547,12 @@ func style_result_label() -> void:
     var label_settings = LabelSettings.new()
     label_settings.font_color = Color.WHITE
     label_settings.font = load("res://fonts/Roboto-Bold.ttf")  # Ensure the font exists
+    if not label_settings.font:
+        print("Failed to load font for Result Label")
+    result_label.custom_minimum_size = Vector2(300, 50)
     result_label.label_settings = label_settings
     result_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     result_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-    result_label.custom_minimum_size = Vector2(300, 50)
     result_label.global_position = MERGE_POSITION  # Position it at the merge point
     result_label.visible = false
     result_label.modulate.a = 0  # Start invisible

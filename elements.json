@@ -1,43 +1,282 @@
 {
   "combinations": [
-    { "elements": ["Fire", "Water"], "result": "Steam", "category": "Nature", "difficulty": 2 },
-    { "elements": ["Earth", "Water"], "result": "Mud", "category": "Nature", "difficulty": 2 },
-    { "elements": ["Air", "Earth"], "result": "Dust", "category": "Nature", "difficulty": 3 },
-    { "elements": ["Fire", "Earth"], "result": "Lava", "category": "Nature", "difficulty": 4 },
-    { "elements": ["Water", "Air"], "result": "Rain", "category": "Nature", "difficulty": 1 },
-    { "elements": ["Fire", "Air"], "result": "Smoke", "category": "Nature", "difficulty": 2 },
-    { "elements": ["Mouse", "Keyboard"], "result": "Personal Computer", "category": "Technology", "difficulty": 5 },
-    { "elements": ["Metal", "Electricity"], "result": "Wire", "category": "Technology", "difficulty": 3 },
-    { "elements": ["Plastic", "Electricity"], "result": "Circuit", "category": "Technology", "difficulty": 4 },
-    { "elements": ["Computer", "Internet"], "result": "Network", "category": "Technology", "difficulty": 5 },
-    { "elements": ["Chip", "Electricity"], "result": "Processor", "category": "Technology", "difficulty": 6 },
-    { "elements": ["Robot", "Code"], "result": "AI", "category": "Technology", "difficulty": 7 },
-    { "elements": ["Sun", "Rain"], "result": "Rainbow", "category": "Nature", "difficulty": 2 },
-    { "elements": ["Sand", "Fire"], "result": "Glass", "category": "Nature", "difficulty": 3 },
-    { "elements": ["Glass", "Light"], "result": "Lens", "category": "Technology", "difficulty": 4 },
-    { "elements": ["Wood", "Tool"], "result": "Paper", "category": "Human", "difficulty": 3 },
-    { "elements": ["Stone", "Metal"], "result": "Hammer", "category": "Human", "difficulty": 3 },
-    { "elements": ["Stone", "Wood"], "result": "Axe", "category": "Human", "difficulty": 4 },
-    { "elements": ["Metal", "Fire"], "result": "Sword", "category": "Human", "difficulty": 5 },
-    { "elements": ["Life", "Water"], "result": "Plant", "category": "Nature", "difficulty": 2 },
-    { "elements": ["Plant", "Sun"], "result": "Flower", "category": "Nature", "difficulty": 3 },
-    { "elements": ["Mud", "Life"], "result": "Clay", "category": "Nature", "difficulty": 4 },
-    { "elements": ["Plant", "Fire"], "result": "Ash", "category": "Nature", "difficulty": 3 },
-    { "elements": ["Metal", "Wheel"], "result": "Car", "category": "Technology", "difficulty": 5 },
-    { "elements": ["Wheel", "Engine"], "result": "Vehicle", "category": "Technology", "difficulty": 6 },
-    { "elements": ["Cloud", "Electricity"], "result": "Storm", "category": "Nature", "difficulty": 4 },
-    { "elements": ["Code", "Data"], "result": "Algorithm", "category": "Technology", "difficulty": 6 },
-    { "elements": ["Sound", "Electricity"], "result": "Speaker", "category": "Technology", "difficulty": 5 },
-    { "elements": ["Paper", "Ink"], "result": "Book", "category": "Human", "difficulty": 3 },
-    { "elements": ["Water", "Cold"], "result": "Ice", "category": "Nature", "difficulty": 1 },
-    { "elements": ["Electricity", "Water"], "result": "Hydroelectric Power", "category": "Technology", "difficulty": 7 },
-    { "elements": ["Fire", "Stone"], "result": "Obsidian", "category": "Nature", "difficulty": 6 },
-    { "elements": ["Metal", "Earth"], "result": "Ore", "category": "Nature", "difficulty": 3 },
-    { "elements": ["Air", "Life"], "result": "Bird", "category": "Nature", "difficulty": 2 },
-    { "elements": ["Water", "Plant"], "result": "Tree", "category": "Nature", "difficulty": 3 },
-    { "elements": ["Sun", "Plant"], "result": "Photosynthesis", "category": "Science", "difficulty": 6 },
-    { "elements": ["Metal", "Code"], "result": "Robot", "category": "Technology", "difficulty": 8 },
-    { "elements": ["Plastic", "Glass"], "result": "Touchscreen", "category": "Technology", "difficulty": 7 },
-    { "elements": ["Energy", "Light"], "result": "Laser", "category": "Technology", "difficulty": 6 }
+    {
+      "elements": ["Air 💨", "Earth 🌍"],
+      "result": "Dust 🪶",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Air 💨", "Fire 🔥"],
+      "result": "Smoke 💨",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Air 💨", "Life 🐣"],
+      "result": "Bird 🕊️",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Air 💨", "Metal ⚙️"],
+      "result": "Wind Chimes 🎐",
+      "category": "Human",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Air 💨", "Sand 🏖️"],
+      "result": "Dust Storm 🌪️",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Air 💨", "Stone 🪨"],
+      "result": "Gravel 🪨",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Air 💨", "Sun 🌞"],
+      "result": "Heatwave 🔥",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Air 💨", "Water 💧"],
+      "result": "Rain 🌧️",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Air 💨", "Wood 🌳"],
+      "result": "Flute 🎶",
+      "category": "Human",
+      "difficulty": 3
+    },
+
+    {
+      "elements": ["Earth 🌍", "Fire 🔥"],
+      "result": "Lava 🌋",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Earth 🌍", "Life 🐣"],
+      "result": "Animal 🐾",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Earth 🌍", "Metal ⚙️"],
+      "result": "Ore ⛏️",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Earth 🌍", "Sand 🏖️"],
+      "result": "Desert 🐪",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Earth 🌍", "Stone 🪨"],
+      "result": "Mountain 🏔️",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Earth 🌍", "Sun 🌞"],
+      "result": "Fertile Soil 🌱",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Earth 🌍", "Water 💧"],
+      "result": "Mud 🏺",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Earth 🌍", "Wood 🌳"],
+      "result": "Forest 🌲",
+      "category": "Nature",
+      "difficulty": 2
+    },
+
+    {
+      "elements": ["Fire 🔥", "Life 🐣"],
+      "result": "Phoenix 🦅",
+      "category": "Myth",
+      "difficulty": 4
+    },
+    {
+      "elements": ["Fire 🔥", "Metal ⚙️"],
+      "result": "Sword ⚔️",
+      "category": "Human",
+      "difficulty": 4
+    },
+    {
+      "elements": ["Fire 🔥", "Sand 🏖️"],
+      "result": "Glass 🪟",
+      "category": "Human",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Fire 🔥", "Stone 🪨"],
+      "result": "Obsidian 🖤",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Fire 🔥", "Sun 🌞"],
+      "result": "Solar Flare 🌟",
+      "category": "Nature",
+      "difficulty": 4
+    },
+    {
+      "elements": ["Fire 🔥", "Water 💧"],
+      "result": "Steam ♨️",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Fire 🔥", "Wood 🌳"],
+      "result": "Charcoal 🌑",
+      "category": "Human",
+      "difficulty": 2
+    },
+
+    {
+      "elements": ["Life 🐣", "Metal ⚙️"],
+      "result": "Golem 🤖",
+      "category": "Myth",
+      "difficulty": 4
+    },
+    {
+      "elements": ["Life 🐣", "Sand 🏖️"],
+      "result": "Cactus 🌵",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Life 🐣", "Stone 🪨"],
+      "result": "Moss 🍀",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Life 🐣", "Sun 🌞"],
+      "result": "Photosynthesis 🍃",
+      "category": "Science",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Life 🐣", "Water 💧"],
+      "result": "Algae 🦠",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Life 🐣", "Wood 🌳"],
+      "result": "Fruit 🍎",
+      "category": "Nature",
+      "difficulty": 2
+    },
+
+    {
+      "elements": ["Metal ⚙️", "Sand 🏖️"],
+      "result": "Hourglass ⏳",
+      "category": "Human",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Metal ⚙️", "Stone 🪨"],
+      "result": "Statue 🗿",
+      "category": "Human",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Metal ⚙️", "Sun 🌞"],
+      "result": "Gold 🏆",
+      "category": "Nature",
+      "difficulty": 4
+    },
+    {
+      "elements": ["Metal ⚙️", "Water 💧"],
+      "result": "Rust 🍂",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Metal ⚙️", "Wood 🌳"],
+      "result": "Shield 🛡️",
+      "category": "Human",
+      "difficulty": 3
+    },
+
+    {
+      "elements": ["Sand 🏖️", "Stone 🪨"],
+      "result": "Sandstone 🏜️",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Sand 🏖️", "Sun 🌞"],
+      "result": "Dune 🌅",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Sand 🏖️", "Water 💧"],
+      "result": "Quicksand 🕳️",
+      "category": "Nature",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Sand 🏖️", "Wood 🌳"],
+      "result": "Sandpaper 🪣",
+      "category": "Human",
+      "difficulty": 2
+    },
+
+    {
+      "elements": ["Stone 🪨", "Sun 🌞"],
+      "result": "Sundial 🕰️",
+      "category": "Human",
+      "difficulty": 3
+    },
+    {
+      "elements": ["Stone 🪨", "Water 💧"],
+      "result": "Pebbles 🟤",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Stone 🪨", "Wood 🌳"],
+      "result": "Hut 🛖",
+      "category": "Human",
+      "difficulty": 2
+    },
+
+    {
+      "elements": ["Sun 🌞", "Water 💧"],
+      "result": "Rainbow 🌈",
+      "category": "Nature",
+      "difficulty": 2
+    },
+    {
+      "elements": ["Sun 🌞", "Wood 🌳"],
+      "result": "Growth 🌱",
+      "category": "Nature",
+      "difficulty": 2
+    },
+
+    {
+      "elements": ["Water 💧", "Wood 🌳"],
+      "result": "Boat 🚣",
+      "category": "Human",
+      "difficulty": 3
+    }
   ]
 }
