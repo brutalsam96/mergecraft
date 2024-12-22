@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bi06ol6stksnc"]
+[gd_scene load_steps=9 format=3 uid="uid://bi06ol6stksnc"]
 
 [ext_resource type="Script" path="res://Scripts/help.gd" id="1_70e6c"]
 [ext_resource type="VideoStream" path="res://assets/video.ogv" id="1_bwk3g"]
@@ -15,6 +15,9 @@ corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 corner_detail = 16
 anti_aliasing_size = 1.21
+
+[sub_resource type="SystemFont" id="SystemFont_cdlms"]
+font_names = PackedStringArray("Exo")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wcssk"]
 
@@ -95,6 +98,7 @@ theme_override_colors/font_pressed_color = Color(0.0745098, 0.0745098, 0.0745098
 theme_override_colors/font_focus_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
 theme_override_colors/font_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
 theme_override_colors/font_outline_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
+theme_override_fonts/font = SubResource("SystemFont_cdlms")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = SubResource("StyleBoxEmpty_wcssk")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_f5g2b")
