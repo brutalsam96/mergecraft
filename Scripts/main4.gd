@@ -5,6 +5,8 @@ extends Node2D
 @onready var result_label: Label          = $Label4
 @onready var score_label: Label           = $ScoreLabel
 @onready var attempts_label: Label        = $AttemptsLabel
+@onready var correct_cue: AudioStreamPlayer2D = $"correct"
+@onready var wrong_cue: AudioStreamPlayer2D   = $"incorrect"
 
 # Keep track of everything needed for combos, dragging, score, etc.
 var combinations: Array               = []
@@ -19,7 +21,7 @@ var original_pos_element_1: Vector2   = Vector2.ZERO
 var score: int                        = 0
 var attempts: int                     = 3
 
-const MERGE_POSITION: Vector2         = Vector2(300, -200)
+const MERGE_POSITION: Vector2         = Vector2(300, -300)
 const MOVE_DURATION: float            = 0.3
 const FADE_DURATION: float            = 0.3
 const RESULT_DISPLAY_DURATION: float  = 2.5
@@ -30,7 +32,7 @@ var ANIMATION_DURATION = 1.0 # Slow down the animation
 
 func _ready():
     drop_spots = get_tree().get_nodes_in_group("drop_spot_group")
-
+    print(correct_cue, wrong_cue) 
     # Load combos once
     if GameState.combinations.is_empty():
         GameState.load_combinations()
@@ -214,12 +216,16 @@ func merge_elements(elem1: Button, elem2: Button, _orig_pos1: Vector2, _orig_pos
 func display_result_label(elem1: Button, elem2: Button, font_size: int = 36) -> void:
     var is_correct = check_combination_correctness(elem1, elem2)
     if is_correct:
+        if correct_cue:
+            correct_cue.play()
         result_label.text = "Correct! %s + %s = %s" % [elem1.text, elem2.text, current_combination.get("result", "")]
         result_label.modulate = Color(0, 1, 0)
         var difficulty = current_combination.get("difficulty", 1)
         score += 10 * difficulty
         update_score_label()
     else:
+        if wrong_cue:
+            wrong_cue.play()
         var correct_elems = current_combination.get("elements", [])
         result_label.text = "Incorrect! %s" % str(correct_elems)
         result_label.modulate = Color(1, 0, 0)
@@ -303,7 +309,8 @@ func handle_game_over() -> void:
     var restart_btn = Button.new()
     restart_btn.text = "Restart"
     restart_btn.process_mode = Node.PROCESS_MODE_ALWAYS
-    restart_btn.add_theme_font_size_override("font_size", 24)
+    restart_btn.add_theme_font_size_override("font_size", 36)
+    restart_btn.custom_minimum_size = Vector2(200, 80)  # Set custom button size
     restart_btn.pressed.connect(self._on_restart_pressed)
     container.add_child(restart_btn)
 
