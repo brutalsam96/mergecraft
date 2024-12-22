@@ -11,14 +11,13 @@ font = SubResource("SystemFont_l2wjn")
 font_size = 81
 
 [node name="Main" type="Node2D"]
-position = Vector2(525, 1918)
+position = Vector2(540, 1920)
 script = ExtResource("1_aeks7")
 
 [node name="drop_spot" parent="." instance=ExtResource("2_ealtm")]
 position = Vector2(0, -1158)
 
 [node name="ButtonsGroup" type="Node2D" parent="."]
-position = Vector2(0, 14)
 
 [node name="Button" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
 offset_left = -389.0
@@ -85,4 +84,11 @@ offset_left = -338.0
 offset_top = -1801.0
 offset_right = 350.0
 offset_bottom = -1564.0
+label_settings = SubResource("LabelSettings_ij3gf")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -338.0
+offset_top = -1539.0
+offset_right = 350.0
+offset_bottom = -1302.0
 label_settings = SubResource("LabelSettings_ij3gf")

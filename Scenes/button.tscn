@@ -13,6 +13,7 @@ default_font_size = 36
 
 [sub_resource type="SystemFont" id="SystemFont_ie26l"]
 font_names = PackedStringArray("Exo")
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ms1e4"]
 bg_color = Color(0.893053, 0.926408, 1, 1)

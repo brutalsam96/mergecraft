@@ -4,12 +4,13 @@ extends Node2D
 # Nodes
 # ------------------------------------------------------------------
 @onready var button_container: Node2D = $ButtonsGroup
+@onready var display_label: Label = $Label
 @onready var result_label: Label = $Label4
 
 # ------------------------------------------------------------------
 # Constants for Animation
 # ------------------------------------------------------------------
-const MERGE_POSITION: Vector2 = Vector2(300, 200)  # Adjust to your desired central position
+const MERGE_POSITION: Vector2 = Vector2(300, -200)  # Adjust to your desired central position
 const MOVE_DURATION: float = 0.2
 const FADE_DURATION: float = 0.2
 const RESULT_DISPLAY_DURATION: float = 1.0
@@ -48,7 +49,7 @@ func _ready():
     # (3) Capture each button’s original position
     for child in button_container.get_children():
         if child is Button:
-            original_position_map[child] = child.global_position
+            original_position_map[child] = Vector2(child.global_position.x, -child.global_position.y)
 
     # (4) Style the result label
     style_result_label()
@@ -72,8 +73,8 @@ func start_new_round() -> void:
     # Pick a random combination
     current_combination = combinations[randi() % combinations.size()]
 
-    if result_label:
-        result_label.text = "Find: " + str(current_combination.get("result", "???"))
+    if display_label:
+        display_label.text = "Find: " + str(current_combination.get("result", "???"))
 
     # Reset any leftover states
     element_1 = null
@@ -90,7 +91,8 @@ func reset_and_assign_buttons() -> void:
     for btn in buttons:
         if btn is Button:
             if original_position_map.has(btn):
-                btn.global_position = original_position_map[btn]
+                var orig_pos = original_position_map[btn]
+                btn.global_position = Vector2(orig_pos.x, -orig_pos.y)  # Adjust for bottom-center
             # Reset scale, rotation, etc.
             btn.set_scale(Vector2.ONE)
             btn.modulate.a = 1
@@ -150,8 +152,8 @@ func _input(event):
 
         # Optionally clamp inside viewport
         var vp_size = get_viewport_rect().size
-        b.position.x = clamp(b.position.x, 0, vp_size.x - b.size.x)
-        b.position.y = clamp(b.position.y, 0, vp_size.y - b.size.y)
+        b.position.x = clamp(b.position.x, -vp_size.x / 2, vp_size.x / 2 - b.size.x)
+        b.position.y = clamp(b.position.y, -vp_size.y, -b.size.y)  # Clamp above bottom-center
 
 func get_button_under_mouse() -> Button:
     var mp = get_global_mouse_position()
@@ -173,7 +175,7 @@ func handle_snap(btn: Button) -> void:
     if area2d:
         for ds in drop_spots:
             # If the spot's overlapping_areas includes our button's area
-            if ds.get_overlapping_areas().has(area2d):
+            if ds.get_overlapping_areas().has(btn.get_node("Area2D")):
                 snapped_spot = ds
                 break
 
@@ -197,13 +199,11 @@ func snap_button_to_spot(btn: Button, ds: Node) -> void:
             ds_size = collision_shape.shape.extents * 2
         elif collision_shape.shape is CircleShape2D:
             ds_size = Vector2(collision_shape.shape.radius * 2, collision_shape.shape.radius * 2)
-    var target_pos = ds.global_position + ds_size / 2 - btn.size / 2
-    target_pos.y -= 60  # Adjust offset as needed
-    target_pos.x -= 50  # Adjust offset as needed
+    var target_pos = Vector2(ds.global_position.x, ds.global_position.y)  # Adjust for bottom-center
+    target_pos += Vector2(-btn.size.x / 2, -btn.size.y / 2)  # Center button on drop spot
 
-    # Animate to drop spot using code-based Tween
     var tween = create_tween()
-    tween.tween_property(btn, "global_position", target_pos, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(btn, "global_position", target_pos, MOVE_DURATION).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
     await tween.finished
 
     # If we didn't have an element_1 yet, store this as element_1
@@ -226,23 +226,35 @@ func merge_elements(elem1: Button, elem2: Button, _orig_pos1: Vector2, _orig_pos
     # Disable further input during animation
     set_process_input(false)
 
-    # Create a Tween instance
+    # Correct the merge position for the bottom-center coordinate system
+    var corrected_merge_position = Vector2(MERGE_POSITION.x, -MERGE_POSITION.y)
+
+    # Calculate positions for the animation
+    var element1_target_pos = corrected_merge_position
+    var element2_target_pos = corrected_merge_position + Vector2(elem1.size.x + 50, 0)  # Offset to the side
+
+    # Debugging positions
+    print("Merge Position:", corrected_merge_position)
+    print("Element 1 Target Position:", element1_target_pos)
+    print("Element 2 Target Position:", element2_target_pos)
+
+    # Create a Tween instance for animation
     var tween = create_tween()
 
-    # Animate both buttons moving to the MERGE_POSITION
+    # Animate both buttons moving to their respective target positions
     tween.parallel()
-    tween.tween_property(elem1, "global_position", MERGE_POSITION, MOVE_DURATION).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-    var opposite_position = MERGE_POSITION + Vector2(elem1.size.x + 50, 0)  # 50 pixels extra spacing
-    tween.tween_property(elem2, "global_position", opposite_position, MOVE_DURATION).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(elem1, "global_position", element1_target_pos, MOVE_DURATION).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(elem2, "global_position", element2_target_pos, MOVE_DURATION).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
-    # After movement, fade out both buttons
+    # After moving, fade out both buttons
     tween.parallel()
     tween.tween_property(elem1, "modulate:a", 0, FADE_DURATION).set_delay(MOVE_DURATION)
     tween.tween_property(elem2, "modulate:a", 0, FADE_DURATION).set_delay(MOVE_DURATION)
 
-    # After fading out, display the result label
+    # Wait for the animation to finish
     await tween.finished
 
+    # Handle the result display
     display_result_label(elem1, elem2)
 
 func display_result_label(elem1: Button, elem2: Button) -> void:
@@ -252,30 +264,19 @@ func display_result_label(elem1: Button, elem2: Button) -> void:
     # Update the result label
     if is_correct:
         result_label.text = "Correct!"
-        result_label.label_settings.font_color = Color.GREEN
+        result_label.modulate = Color(0, 1, 0)  # Green color
     else:
         var correct_elements = current_combination.get("elements", [])
         result_label.text = "Incorrect! Correct: " + str(correct_elements)
-        result_label.label_settings.font_color = Color.RED
+        result_label.modulate = Color(1, 0, 0)  # Red color
 
-    # Hide the merged buttons
-    elem1.visible = false
-    elem2.visible = false
-
-    # Animate the result label fade-in
-    var result_tween = create_tween()
-    result_label.modulate.a = 0
+    # Center the result label on the screen
+    var screen_center = get_viewport_rect().size / 2
+    result_label.global_position = screen_center
     result_label.visible = true
-    result_tween.tween_property(result_label, "modulate:a", 1, FADE_DURATION).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
 
     # Wait for the result display duration
-    await result_tween.finished
     await get_tree().create_timer(RESULT_DISPLAY_DURATION).timeout
-
-    # Animate the result label fade-out
-    var hide_tween = create_tween()
-    hide_tween.tween_property(result_label, "modulate:a", 0, FADE_DURATION).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
-    await hide_tween.finished
 
     # Hide the result label
     result_label.visible = false
@@ -283,8 +284,6 @@ func display_result_label(elem1: Button, elem2: Button) -> void:
     # Reset buttons' visibility and positions
     elem1.visible = true
     elem2.visible = true
-    elem1.modulate.a = 1
-    elem2.modulate.a = 1
     elem1.global_position = original_position_map[elem1]
     elem2.global_position = original_position_map[elem2]
 
@@ -308,8 +307,9 @@ func check_combination_correctness(elem1: Button, elem2: Button) -> bool:
 # ------------------------------------------------------------------
 
 func animate_back(button: Button, target_pos: Vector2) -> void:
+    var adjusted_target_pos = Vector2(target_pos.x, -target_pos.y)  # Correct for bottom-center
     var tween = create_tween()
-    tween.tween_property(button, "global_position", target_pos, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    tween.tween_property(button, "global_position", adjusted_target_pos, MOVE_DURATION).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
     await tween.finished
 
 # ------------------------------------------------------------------
