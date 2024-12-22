@@ -23,7 +23,7 @@ font_names = PackedStringArray("Exo")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6lgqm"]
 
 [node name="Main" type="Node2D"]
-position = Vector2(565, 1920)
+position = Vector2(555, 1920)
 script = ExtResource("1_aeks7")
 
 [node name="correct" type="AudioStreamPlayer2D" parent="."]

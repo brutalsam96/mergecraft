@@ -51,6 +51,7 @@ func _ready():
     # Start first round
     start_new_round()
 
+
 func initialize_score_attempts() -> void:
     score = 0
     attempts = 3
@@ -66,7 +67,7 @@ func update_attempts_label() -> void:
         attempts_label.text = "ATTEMPTS: %d" % attempts
 
 func style_score_and_attempts_labels() -> void:
-    var custom_font = load("res://fonts/Roboto-Bold.ttf")
+    var custom_font = load("res://fonts/NotoEmoji-VariableFont_wght.ttf")
     if custom_font:
         custom_font.fixed_size = 42
 
@@ -82,7 +83,7 @@ func style_score_and_attempts_labels() -> void:
 func style_result_label() -> void:
     var label_settings = LabelSettings.new()
     label_settings.font_color = Color.WHITE
-    label_settings.font = load("res://fonts/Roboto-Bold.ttf")
+    label_settings.font = load("res://fonts/NotoEmoji-VariableFont_wght.ttf")
     if label_settings.font:
         result_label.custom_minimum_size = Vector2(300, 50)
         result_label.label_settings = label_settings
@@ -235,7 +236,7 @@ func display_result_label(elem1: Button, elem2: Button, font_size: int = 36) -> 
             handle_game_over()
 
     var label_settings = LabelSettings.new()
-    label_settings.font = load("res://fonts/Roboto-Bold.ttf")
+    label_settings.font = load("res://fonts/NotoEmoji-VariableFont_wght.ttf")
     label_settings.font_size = font_size
     result_label.label_settings = label_settings
 
