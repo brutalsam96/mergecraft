@@ -464,7 +464,7 @@ func display_result_label(elem1: Button, elem2: Button, font_size: int = 36) -> 
 # ------------------------------------------------------------------
 
 func handle_game_over() -> void:
-    print("Game Over triggered")  # Debugging
+    # print("Game Over triggered")  # Debugging
     # Update Game Over Label with final score
     game_over_label.text = "Game Over!\nFinal Score: " + str(score)
     game_over_label.visible = true
