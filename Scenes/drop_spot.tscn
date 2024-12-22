@@ -1,16 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://de1fbgxf84mr8"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_w4jp1"]
+[ext_resource type="Texture2D" uid="uid://n4s14ffe1fve" path="res://assets/143-1431858_hole-clipart.png" id="1_681xl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_312qt"]
-radius = 59.3043
+radius = 95.6347
 
 [node name="drop_spot" type="Area2D" groups=["drop_spot_group"]]
 position = Vector2(542, 715)
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-scale = Vector2(118, 124)
-mesh = SubResource("QuadMesh_w4jp1")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_312qt")
+
+[node name="hole" type="Sprite2D" parent="."]
+position = Vector2(-1.71661e-05, 2.86102e-05)
+scale = Vector2(0.230357, 0.230357)
+texture = ExtResource("1_681xl")
