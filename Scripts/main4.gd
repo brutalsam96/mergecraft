@@ -7,7 +7,15 @@ extends Node2D
 @onready var result_label: Label = $Label4
 
 # ------------------------------------------------------------------
-# Game data
+# Constants for Animation
+# ------------------------------------------------------------------
+const MERGE_POSITION: Vector2 = Vector2(300, 200)  # Adjust to your desired central position
+const MOVE_DURATION: float = 0.2
+const FADE_DURATION: float = 0.2
+const RESULT_DISPLAY_DURATION: float = 1.0
+
+# ------------------------------------------------------------------
+# Game Data
 # ------------------------------------------------------------------
 var combinations: Array = []                  # All loaded combos
 var current_combination: Dictionary = {}      # The current correct combo
@@ -15,14 +23,14 @@ var all_elements: Array = []                  # All possible elements
 var drop_spots: Array = []                    # Areas to snap onto
 
 # ------------------------------------------------------------------
-# Drag tracking
+# Drag Tracking
 # ------------------------------------------------------------------
 var is_dragging: bool = false
 var current_dragged_button: Button = null
-var original_position_map: Dictionary = {}  # Maps button -> original_position
+var original_position_map: Dictionary = {}    # Maps button -> original_position
 
 # ------------------------------------------------------------------
-# Snap tracking: we only need two items
+# Snap Tracking: we only need two items
 # ------------------------------------------------------------------
 var element_1: Button = null
 var original_pos_element_1: Vector2 = Vector2.ZERO
@@ -36,15 +44,17 @@ func _ready():
         GameState.load_combinations()
     combinations = GameState.combinations
     all_elements = get_all_unique_elements(combinations)
-    
+
     # (3) Capture each button’s original position
     for child in button_container.get_children():
         if child is Button:
             original_position_map[child] = child.global_position
 
-    # (4) Start the first round
-    start_new_round()
+    # (4) Style the result label
+    style_result_label()
 
+    # (5) Start the first round
+    start_new_round()
 
 # ------------------------------------------------------------------
 # Utility
@@ -72,25 +82,20 @@ func start_new_round() -> void:
     # Also reset all buttons (positions, text, meta, etc.)
     reset_and_assign_buttons()
 
-
-# Assign 2 correct + 8 random wrong
 func reset_and_assign_buttons() -> void:
     # Gather references
     var buttons = button_container.get_children()
 
     # Return each button to its original position & clear any tween leftovers
-    # (In case a tween was half-finished or a button was left snapped)
     for btn in buttons:
         if btn is Button:
             if original_position_map.has(btn):
                 btn.global_position = original_position_map[btn]
-            # Also reset scale, rotation, or anything else if needed
+            # Reset scale, rotation, etc.
             btn.set_scale(Vector2.ONE)
-            # If you want to kill any leftover tweens on the button:
-            for tween in btn.get_tree().get_nodes_in_group("tween"):
-                # This might be overkill, but ensures no leftover animations
-                if tween.is_a_parent_of(btn):
-                    tween.kill()
+            btn.modulate.a = 1
+            btn.visible = true
+            # Optionally reset any other properties if modified during animations
 
     # Determine 2 correct
     var correct_elements = current_combination.get("elements", []).duplicate()
@@ -128,13 +133,16 @@ func _input(event):
             if btn:
                 is_dragging = true
                 current_dragged_button = btn
+                # Add visual feedback
+                current_dragged_button.scale = Vector2(1.1, 1.1)
         else:
             # Mouse released
             if is_dragging and current_dragged_button:
                 is_dragging = false
                 handle_snap(current_dragged_button)
+                # Reset visual feedback
+                current_dragged_button.scale = Vector2(1, 1)
                 current_dragged_button = null
-
     elif event is InputEventMouseMotion and is_dragging and current_dragged_button:
         # Drag the button
         var b = current_dragged_button
@@ -142,9 +150,8 @@ func _input(event):
 
         # Optionally clamp inside viewport
         var vp_size = get_viewport_rect().size
-        b.position.x = clamp(b.position.x, 0, vp_size.x)
-        b.position.y = clamp(b.position.y, 0, vp_size.y)
-
+        b.position.x = clamp(b.position.x, 0, vp_size.x - b.size.x)
+        b.position.y = clamp(b.position.y, 0, vp_size.y - b.size.y)
 
 func get_button_under_mouse() -> Button:
     var mp = get_global_mouse_position()
@@ -181,7 +188,6 @@ func handle_snap(btn: Button) -> void:
             element_1 = null
             original_pos_element_1 = Vector2.ZERO
 
-
 # Snap button to drop_spot
 func snap_button_to_spot(btn: Button, ds: Node) -> void:
     var collision_shape = ds.get_node("CollisionShape2D")
@@ -192,40 +198,101 @@ func snap_button_to_spot(btn: Button, ds: Node) -> void:
         elif collision_shape.shape is CircleShape2D:
             ds_size = Vector2(collision_shape.shape.radius * 2, collision_shape.shape.radius * 2)
     var target_pos = ds.global_position + ds_size / 2 - btn.size / 2
-    target_pos.y -= 60  # Add 50 pixel offset to y position
-    target_pos.x -= 50  # Add 40 pixel offset to x position
-    
-    # Animate to drop spot
+    target_pos.y -= 60  # Adjust offset as needed
+    target_pos.x -= 50  # Adjust offset as needed
+
+    # Animate to drop spot using code-based Tween
     var tween = create_tween()
-    tween.tween_property(btn, "global_position", target_pos, 0.2)
+    tween.tween_property(btn, "global_position", target_pos, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
     await tween.finished
 
     # If we didn't have an element_1 yet, store this as element_1
     if element_1 == null:
         element_1 = btn
         original_pos_element_1 = original_position_map[btn]
-
     else:
         # We have a second element
         var element_2 = btn
         var original_pos_element_2 = original_position_map[element_2]
 
-        # 1) Check correctness
-        var _is_correct = check_combination_correctness(element_1, element_2)
+        # Start the merge animation
+        merge_elements(element_1, element_2, original_pos_element_1, original_pos_element_2)
 
-        # 2) Animate both back
-        await animate_back(element_1, original_pos_element_1)
-        await animate_back(element_2, original_pos_element_2)
+# ------------------------------------------------------------------
+# Merge Animation Logic
+# ------------------------------------------------------------------
 
-        # 3) Clear out for next usage
-        element_1 = null
+func merge_elements(elem1: Button, elem2: Button, _orig_pos1: Vector2, _orig_pos2: Vector2) -> void:
+    # Disable further input during animation
+    set_process_input(false)
 
-        # 4) Show result label for a bit
-        await get_tree().create_timer(0.3).timeout
+    # Create a Tween instance
+    var tween = create_tween()
 
-        # 5) Start new round
-        start_new_round()
+    # Animate both buttons moving to the MERGE_POSITION
+    tween.parallel()
+    tween.tween_property(elem1, "global_position", MERGE_POSITION, MOVE_DURATION).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+    var opposite_position = MERGE_POSITION + Vector2(elem1.size.x + 50, 0)  # 50 pixels extra spacing
+    tween.tween_property(elem2, "global_position", opposite_position, MOVE_DURATION).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
+    # After movement, fade out both buttons
+    tween.parallel()
+    tween.tween_property(elem1, "modulate:a", 0, FADE_DURATION).set_delay(MOVE_DURATION)
+    tween.tween_property(elem2, "modulate:a", 0, FADE_DURATION).set_delay(MOVE_DURATION)
+
+    # After fading out, display the result label
+    await tween.finished
+
+    display_result_label(elem1, elem2)
+
+func display_result_label(elem1: Button, elem2: Button) -> void:
+    # Check combination correctness
+    var is_correct = check_combination_correctness(elem1, elem2)
+
+    # Update the result label
+    if is_correct:
+        result_label.text = "Correct!"
+        result_label.label_settings.font_color = Color.GREEN
+    else:
+        var correct_elements = current_combination.get("elements", [])
+        result_label.text = "Incorrect! Correct: " + str(correct_elements)
+        result_label.label_settings.font_color = Color.RED
+
+    # Hide the merged buttons
+    elem1.visible = false
+    elem2.visible = false
+
+    # Animate the result label fade-in
+    var result_tween = create_tween()
+    result_label.modulate.a = 0
+    result_label.visible = true
+    result_tween.tween_property(result_label, "modulate:a", 1, FADE_DURATION).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+
+    # Wait for the result display duration
+    await result_tween.finished
+    await get_tree().create_timer(RESULT_DISPLAY_DURATION).timeout
+
+    # Animate the result label fade-out
+    var hide_tween = create_tween()
+    hide_tween.tween_property(result_label, "modulate:a", 0, FADE_DURATION).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
+    await hide_tween.finished
+
+    # Hide the result label
+    result_label.visible = false
+
+    # Reset buttons' visibility and positions
+    elem1.visible = true
+    elem2.visible = true
+    elem1.modulate.a = 1
+    elem2.modulate.a = 1
+    elem1.global_position = original_position_map[elem1]
+    elem2.global_position = original_position_map[elem2]
+
+    # Start a new round
+    start_new_round()
+
+    # Re-enable input
+    set_process_input(true)
 
 func check_combination_correctness(elem1: Button, elem2: Button) -> bool:
     var combined = [elem1.get_meta("element"), elem2.get_meta("element")]
@@ -234,25 +301,38 @@ func check_combination_correctness(elem1: Button, elem2: Button) -> bool:
     var correct_combo = current_combination.get("elements", []).duplicate()
     correct_combo.sort()
 
-    if combined == correct_combo:
-        if result_label:
-            result_label.text = "Correct!"
-        return true
-    else:
-        if result_label:
-            result_label.text = "Incorrect! The correct was: %s" % str(current_combination["elements"])
-        return false
-
+    return combined == correct_combo
 
 # ------------------------------------------------------------------
 # Animation Helper
 # ------------------------------------------------------------------
+
 func animate_back(button: Button, target_pos: Vector2) -> void:
     var tween = create_tween()
-    tween.tween_property(button, "global_position", target_pos, 0.2)
+    tween.tween_property(button, "global_position", target_pos, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
     await tween.finished
 
+# ------------------------------------------------------------------
+# Result Label Styling
+# ------------------------------------------------------------------
+
+func style_result_label() -> void:
+    # Style the result label to match Material Design
+    var label_settings = LabelSettings.new()
+    label_settings.font_color = Color.WHITE
+    label_settings.font = load("res://fonts/Roboto-Bold.ttf")  # Ensure the font exists
+    result_label.label_settings = label_settings
+    result_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+    result_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    result_label.custom_minimum_size = Vector2(300, 50)
+    result_label.global_position = MERGE_POSITION  # Position it at the merge point
+    result_label.visible = false
+    result_label.modulate.a = 0  # Start invisible
+
+# ------------------------------------------------------------------
+# Process Function
+# ------------------------------------------------------------------
 
 func _process(_delta):
-    # Optional drawing or debug
-    queue_redraw()
+    # Optional: Any per-frame updates or debug drawing
+    pass
