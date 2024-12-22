@@ -2,10 +2,15 @@ extends Control
 
 
 func _ready():
-	pass
+    pass
 
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+# func _process(delta: float) -> void:
+#     pass
+
+
+func _on_button_pressed() -> void:
+    var next_scene = load("res://Scenes/main.tscn")
+    get_tree().change_scene_to_packed(next_scene)

@@ -1,7 +1,7 @@
 extends Node2D
 
 # Nodes
-@onready var button_container: GridContainer = $ButtonCont  # Ensure this node exists in your scene
+@onready var button_container: Control = $ButtonCont  # Change GridContainer to Control node in the scene
 @onready var result_label: Label = $Label4                  # Ensure this label exists in your scene
 
 # Game data
@@ -34,7 +34,7 @@ func get_all_unique_elements(all_combinations: Array) -> Array:
                 elements.append(element)
     return elements  # Ensures uniqueness
 
-func clear_container(container: GridContainer) -> void:
+func clear_container(container: Control) -> void:
     for child in container.get_children():
         child.queue_free()
 
@@ -54,41 +54,72 @@ func start_new_round() -> void:
 func generate_buttons() -> void:
     # Clear existing buttons
     clear_container(button_container)
-    
+
     # Get the correct elements
     var correct_elements: Array = current_combination["elements"]  # Assuming "elements" is a list
-    
+
     # Generate wrong elements (excluding the correct ones)
     var wrong_elements: Array = all_elements.filter(func(e):
         return not current_combination["elements"].has(e)
     )
     wrong_elements.shuffle()
-    
+
     # Ensure there are enough wrong elements
-    var num_wrong: int = 8  # Number of wrong elements to display
+    var num_wrong: int = 10  # Updating to include 12 total items
     if wrong_elements.size() < num_wrong:
         num_wrong = wrong_elements.size()
-    
+
     wrong_elements = wrong_elements.slice(0, num_wrong)
-    
+
     # Combine correct and wrong elements and shuffle
     var button_elements: Array = correct_elements + wrong_elements
     button_elements.shuffle()
-    
-    # Create buttons dynamically
-    for element in button_elements:
-        var button: Button = Button.new()
-        button.text = element
-        button.name = "ElementButton"  # Assign a name for identification
-        
-        # Store the associated element as metadata
-        button.set_meta("element", element)
-        
-        # Connect the button's "pressed" signal to the handler
-        button.pressed.connect(self._on_button_pressed.bind(button))
-        
-        button_container.add_child(button)
 
+    # Ensure we have exactly 12 items
+    button_elements = button_elements.slice(0, 12)
+
+    var example_button_scene = preload("res://Scenes/button.tscn")
+    var button_size = Vector2(80, 40)  # Fixed button size
+    var cols = 3  # Number of columns
+    var rows = ceil(float(button_elements.size()) / cols)  # Calculate number of rows
+
+    # Get container size
+    var container_size = button_container.size
+
+    # Calculate spacing between buttons
+    var total_button_width = cols * button_size.x
+    var total_button_height = rows * button_size.y
+    var col_spacing = (container_size.x - total_button_width) / (cols) if cols > 1 else 0
+    var row_spacing = (container_size.y - total_button_height) / (rows) if rows > 1 else 0
+
+    # Calculate the starting offset to center the grid
+    var start_x = (container_size.x - total_button_width - col_spacing * (cols - 1)) / 2
+    var start_y = (container_size.y - total_button_height - row_spacing * (rows - 1)) / 2
+
+    # Create and position buttons
+    for i in range(button_elements.size()):
+        var col = i % cols  # Column index
+        var row = floori(float(i) / cols)  # Row index
+
+        # Calculate the position of the button
+        var pos_x = start_x + col * (button_size.x + col_spacing)
+        var pos_y = start_y + row * (button_size.y + row_spacing)
+
+        # Instance the button
+        var button: Button = example_button_scene.instantiate()
+        button.text = button_elements[i]
+        button.name = "ElementButton"  # Assign a name for identification
+
+        # Store the associated element as metadata
+        button.set_meta("element", button_elements[i])
+
+        # Connect the button's "pressed" signal to the handler with parameters
+        button.pressed.connect(self._on_button_pressed.bind(button))
+
+        # Add button to container and set its position
+        button_container.add_child(button)
+        button.set_anchors_preset(Control.PRESET_CENTER)
+        button.position = Vector2(pos_x, pos_y)
 
 
 # Function to handle input events for drag selection
@@ -116,7 +147,7 @@ func _input(event):
                     check_result()
 
 # Utility function to get the child Control at a given position
-func get_child_at_position(container: GridContainer, pos: Vector2) -> Control:
+func get_child_at_position(container: Control, pos: Vector2) -> Control:
     var global_pos: Vector2 = container.get_global_transform().basis_xform(pos)
     for child in container.get_children():
         if child is Control:

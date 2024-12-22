@@ -1,41 +1,86 @@
-[gd_scene load_steps=2 format=3 uid="uid://62vcyoppjt27"]
+[gd_scene load_steps=6 format=3 uid="uid://62vcyoppjt27"]
 
-[ext_resource type="Script" path="res://Scripts/main3.gd" id="1_y1hkl"]
+[ext_resource type="Script" path="res://Scripts/main4.gd" id="1_aeks7"]
+[ext_resource type="PackedScene" uid="uid://de1fbgxf84mr8" path="res://Scenes/drop_spot.tscn" id="2_ealtm"]
+[ext_resource type="PackedScene" uid="uid://b8cveyh8lcy4n" path="res://Scenes/button.tscn" id="2_vpvty"]
+
+[sub_resource type="SystemFont" id="SystemFont_l2wjn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ij3gf"]
+font = SubResource("SystemFont_l2wjn")
+font_size = 81
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_y1hkl")
+script = ExtResource("1_aeks7")
 
-[node name="Label" type="Label" parent="."]
-offset_left = 74.0
-offset_top = 224.0
-offset_right = 291.0
-offset_bottom = 323.0
-metadata/_edit_use_anchors_ = true
+[node name="drop_spot" parent="." instance=ExtResource("2_ealtm")]
+position = Vector2(556, 746)
 
-[node name="Label2" type="Label" parent="."]
-offset_left = 492.0
-offset_top = 162.0
-offset_right = 706.0
-offset_bottom = 224.0
-metadata/_edit_use_anchors_ = true
+[node name="ButtonsGroup" type="Node2D" parent="."]
 
-[node name="Label3" type="Label" parent="."]
-offset_left = 417.0
-offset_top = 69.0
-offset_right = 631.0
-offset_bottom = 131.0
-metadata/_edit_use_anchors_ = true
+[node name="Button" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 159.0
+offset_top = 1143.0
+offset_right = 409.0
+offset_bottom = 1243.0
+
+[node name="Button2" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 134.0
+offset_top = 1293.0
+offset_right = 384.0
+offset_bottom = 1393.0
+
+[node name="Button3" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 84.0
+offset_top = 1443.0
+offset_right = 334.0
+offset_bottom = 1543.0
+
+[node name="Button4" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 134.0
+offset_top = 1593.0
+offset_right = 384.0
+offset_bottom = 1693.0
+
+[node name="Button5" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 159.0
+offset_top = 1743.0
+offset_right = 409.0
+offset_bottom = 1843.0
+
+[node name="Button6" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 673.0
+offset_top = 1143.0
+offset_right = 923.0
+offset_bottom = 1243.0
+
+[node name="Button7" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 706.0
+offset_top = 1293.0
+offset_right = 956.0
+offset_bottom = 1393.0
+
+[node name="Button8" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 748.0
+offset_top = 1443.0
+offset_right = 998.0
+offset_bottom = 1543.0
+
+[node name="Button9" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 706.0
+offset_top = 1593.0
+offset_right = 956.0
+offset_bottom = 1693.0
+
+[node name="Button10" parent="ButtonsGroup" instance=ExtResource("2_vpvty")]
+offset_left = 681.0
+offset_top = 1743.0
+offset_right = 931.0
+offset_bottom = 1843.0
 
 [node name="Label4" type="Label" parent="."]
-offset_left = 100.0
-offset_top = 6.0
-offset_right = 264.0
-offset_bottom = 94.0
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonCont" type="GridContainer" parent="."]
-offset_left = 16.0
-offset_top = 1118.0
-offset_right = 1040.0
-offset_bottom = 1706.0
-metadata/_edit_use_anchors_ = true
+offset_left = 363.0
+offset_top = 14.0
+offset_right = 1051.0
+offset_bottom = 251.0
+label_settings = SubResource("LabelSettings_ij3gf")

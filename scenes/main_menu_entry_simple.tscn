@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bubj7eporceo8"]
+[gd_scene load_steps=8 format=3 uid="uid://bubj7eporceo8"]
 
 [ext_resource type="Script" path="res://scripts/main_menu_entry.gd" id="1_kyodm"]
 [ext_resource type="VideoStream" path="res://assets/video.ogv" id="2_7otvw"]
@@ -16,36 +16,6 @@ modulate_color = Color(0.60933, 0.60933, 0.60933, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_42yl1"]
 font_names = PackedStringArray("Exo")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ms1e4"]
-bg_color = Color(0.893053, 0.926408, 1, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.74902, 0.847059, 1, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-corner_detail = 16
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5ptx"]
-bg_color = Color(0.713169, 0.837863, 1, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.412809, 0.641621, 1, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
-corner_detail = 16
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -145,14 +115,4 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_i6nwh")
 theme_override_styles/normal = SubResource("StyleBoxTexture_h26sj")
 text = "HELP"
 
-[node name="Button" type="Button" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 278.0
-offset_top = 83.0
-offset_right = 616.0
-offset_bottom = 185.0
-theme_override_styles/hover = SubResource("StyleBoxFlat_ms1e4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_b5ptx")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ms1e4")
-toggle_mode = true
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
